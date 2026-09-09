@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-midnight: #06142f;
+  --color-mountie: #0b2a5b;
+  --color-electric: #176bff;
+  --color-ice: #73c7ff;
+  --color-cool-grey: #aab4c3;
+  --color-graphite: #121722;
+  --color-black: #05070b;
+  --color-surface: #0d1a33;
+  --color-border: rgba(115, 199, 255, 0.15);
+  --font-display: var(--font-bebas), ui-sans-serif, system-ui;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: var(--color-midnight);
+  color: white;
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+main {
+  min-width: 0;
+  max-width: 100%;
+}
+
+img,
+video,
+svg {
+  max-width: 100%;
+}
+
+.prose-cms {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.prose-cms h2,
+.prose-cms h3,
+.prose-cms p,
+.prose-cms li {
+  overflow-wrap: anywhere;
+}
+
+.prose-cms ul {
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.prose-cms a {
+  word-break: break-all;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #176bff 0%, #73c7ff 100%);
+  -webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-bg {
+  background: radial-gradient(ellipse at top, rgba(23, 107, 255, 0.15), transparent 60%),
+    linear-gradient(180deg, #05070b 0%, #06142f 50%, #0b2a5b 100%);
+}
+
+.glass-panel {
+  background: rgba(18, 23, 34, 0.72);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(12px);
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(23, 107, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(115, 199, 255, 0.35);
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(115, 199, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(115, 199, 255, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(90deg, black 0%, transparent 70%);
+}
