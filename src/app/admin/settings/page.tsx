@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/Textarea";
 import { LocalImageField } from "@/features/admin/LocalImageField";
 import type { SiteSettings } from "@/types/cms";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export default function AdminSettingsPage() {
@@ -17,23 +17,22 @@ export default function AdminSettingsPage() {
     queryFn: () => api.getSettings(),
   });
 
-  const [form, setForm] = useState<Partial<SiteSettings>>({});
-
-  useEffect(() => {
-    if (data?.data) setForm(data.data);
-  }, [data]);
+  const settings = data?.data;
+  const [draft, setDraft] = useState<Partial<SiteSettings> | null>(null);
+  const form = draft ?? settings ?? {};
 
   const mutation = useMutation({
     mutationFn: (payload: Partial<SiteSettings>) => adminApi.updateSettings(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["settings"] });
+      setDraft(null);
       toast.success("Settings saved");
     },
     onError: (e: Error) => toast.error(e.message),
   });
 
   const set = (key: keyof SiteSettings, value: unknown) => {
-    setForm((prev) => ({ ...prev, [key]: value }));
+    setDraft((prev) => ({ ...(prev ?? settings ?? {}), [key]: value }));
   };
 
   if (isLoading) return <p className="text-cool-grey">Loading...</p>;

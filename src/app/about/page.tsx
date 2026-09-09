@@ -1,7 +1,5 @@
-import { ScrollReveal } from "@/components/animation/ScrollReveal";
 import { PageHero } from "@/components/layout/PageHero";
-import { Container } from "@/components/ui/Container";
-import { CmsImage } from "@/components/ui/CmsImage";
+import { AboutPageContent } from "@/features/about/AboutPageContent";
 import { api } from "@/lib/api";
 import { ABOUT_CONTENT } from "@/lib/home-content";
 import { buildMetadata } from "@/lib/seo";
@@ -12,43 +10,34 @@ export const metadata = buildMetadata({
   path: "/about",
 });
 
+const DEFAULT_ABOUT_HTML = ABOUT_CONTENT.html.trim();
+
 export default async function AboutPage() {
-  let content = ABOUT_CONTENT.html;
   let subtitle = ABOUT_CONTENT.subtitle;
   let heroImageUrl: string | undefined;
+  let extraHtml: string | undefined;
 
   try {
     const page = await api.getPage("about");
-    if (page.data.content) content = page.data.content;
     subtitle = page.data.subtitle ?? subtitle;
     heroImageUrl = page.data.heroImageUrl;
+
+    const cmsContent = page.data.content?.trim();
+    if (cmsContent && cmsContent !== DEFAULT_ABOUT_HTML) {
+      extraHtml = cmsContent;
+    }
   } catch {
     /* use client content */
   }
 
   return (
     <>
-      <PageHero title="About Us" subtitle={subtitle} imageUrl={heroImageUrl} />
-      <section className="py-24">
-        <Container className="max-w-4xl">
-          {heroImageUrl ? (
-            <div className="mb-12 grid min-w-0 gap-12 lg:grid-cols-2 lg:items-start">
-              <ScrollReveal>
-                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-graphite">
-                  <CmsImage src={heroImageUrl} alt="About Little Mounties" fill objectFit="contain" />
-                </div>
-              </ScrollReveal>
-              <ScrollReveal delay={0.1}>
-                <div className="prose-cms min-w-0" dangerouslySetInnerHTML={{ __html: content }} />
-              </ScrollReveal>
-            </div>
-          ) : (
-            <ScrollReveal>
-              <div className="prose-cms min-w-0" dangerouslySetInnerHTML={{ __html: content }} />
-            </ScrollReveal>
-          )}
-        </Container>
-      </section>
+      <PageHero
+        title="About Little Mounties"
+        subtitle={subtitle}
+        imageUrl={heroImageUrl}
+      />
+      <AboutPageContent extraHtml={extraHtml} />
     </>
   );
 }

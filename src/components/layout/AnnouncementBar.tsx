@@ -1,7 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
+
+function readDismissed() {
+  if (typeof window === "undefined") return false;
+  return localStorage.getItem("lm-announcement-dismissed") === "1";
+}
 
 export function AnnouncementBar({
   message,
@@ -14,11 +19,7 @@ export function AnnouncementBar({
   linkLabel?: string;
   variant?: "default" | "hero";
 }) {
-  const [dismissed, setDismissed] = useState(false);
-
-  useEffect(() => {
-    if (localStorage.getItem("lm-announcement-dismissed") === "1") setDismissed(true);
-  }, []);
+  const [dismissed, setDismissed] = useState(readDismissed);
 
   if (dismissed) return null;
 

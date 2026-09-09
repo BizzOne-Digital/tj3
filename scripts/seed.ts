@@ -3,6 +3,7 @@ import { connectDB } from "../src/lib/db";
 import {
   Facility,
   Faq,
+  News,
   PageContent,
   Pricing,
   Service,
@@ -14,6 +15,7 @@ import { BRAND, BRAND_LOGO, CONCEPT_IMAGES } from "../src/lib/constants";
 import {
   ABOUT_CONTENT,
   STATIC_FAQ,
+  STATIC_NEWS,
   STATIC_PRICING_TIERS,
   STATIC_SERVICES,
 } from "../src/lib/home-content";
@@ -43,6 +45,7 @@ async function seed() {
   await Service.deleteMany({});
   await Pricing.deleteMany({});
   await Faq.deleteMany({});
+  await News.deleteMany({});
   await PageContent.deleteMany({});
   await TeamMember.deleteMany({});
 
@@ -98,6 +101,20 @@ async function seed() {
       question: f.question,
       answer: f.answer,
       category: "General",
+      order: i + 1,
+    })),
+  );
+
+  await News.insertMany(
+    STATIC_NEWS.map((article, i) => ({
+      title: article.title,
+      slug: article.slug,
+      excerpt: article.excerpt,
+      content: article.content,
+      imageUrl: article.imageUrl,
+      author: article.author,
+      publishedAt: new Date(article.publishedAt ?? Date.now()),
+      featured: article.featured ?? false,
       order: i + 1,
     })),
   );

@@ -16,16 +16,14 @@ export function AnimatedCounter({
   label?: string;
   duration?: number;
 }) {
-  const [display, setDisplay] = useState(0);
+  const [animated, setAnimated] = useState(0);
   const reduced = usePrefersReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const started = useRef(false);
+  const display = reduced ? value : animated;
 
   useEffect(() => {
-    if (reduced) {
-      setDisplay(value);
-      return;
-    }
+    if (reduced) return;
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
@@ -35,7 +33,7 @@ export function AnimatedCounter({
           const start = performance.now();
           const tick = (now: number) => {
             const progress = Math.min((now - start) / duration, 1);
-            setDisplay(Math.floor(progress * value));
+            setAnimated(Math.floor(progress * value));
             if (progress < 1) requestAnimationFrame(tick);
           };
           requestAnimationFrame(tick);

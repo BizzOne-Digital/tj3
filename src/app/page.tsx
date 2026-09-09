@@ -1,7 +1,6 @@
 import { HomeHero } from "@/features/home/HomeHero";
 import {
   WelcomeSection,
-  CourtPlansSection,
   LeagueCTASection,
   OfferingsSection,
   MembershipSection,
@@ -44,7 +43,6 @@ export default async function HomePage() {
         announcement={settings?.announcement}
       />
       <WelcomeSection />
-      <CourtPlansSection />
       <LeagueCTASection />
       <PartnersCTASection />
       <OfferingsSection />

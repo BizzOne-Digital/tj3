@@ -62,18 +62,6 @@ export function WelcomeSection() {
   );
 }
 
-export function CourtPlansSection() {
-  return (
-    <SectionBlock id="floor-plans" title="Facility Floor Plans">
-      <p>Concept floor plan previews for our multi-level sports complex layout.</p>
-      <div className="grid min-w-0 gap-6 md:grid-cols-2">
-        <SiteImage imageKey="courtPlan1" alt="Floor plan level 1" className="aspect-[4/3] rounded-2xl" objectFit="contain" />
-        <SiteImage imageKey="courtPlan2" alt="Floor plan level 2" className="aspect-[4/3] rounded-2xl" objectFit="contain" />
-      </div>
-    </SectionBlock>
-  );
-}
-
 export function LeagueCTASection() {
   return (
     <section id="leagues" className="overflow-x-clip border-t border-border py-16 gradient-bg sm:py-20">

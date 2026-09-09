@@ -43,22 +43,22 @@ export default async function ServicesPage() {
           <p className="mx-auto mb-12 max-w-3xl text-center text-cool-grey">{OFFERINGS.intro}</p>
           <div className="grid min-w-0 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {items.map((service, i) => (
-              <ScrollReveal key={service.name} delay={i * 0.05}>
-                <article className="glass-panel min-w-0 overflow-hidden rounded-2xl">
+              <ScrollReveal key={service.name} delay={i * 0.05} className="h-full">
+                <article className="glass-panel flex h-full min-w-0 flex-col overflow-hidden rounded-2xl">
                   {"imageKey" in service && service.imageKey ? (
                     <SiteImage
                       imageKey={service.imageKey}
                       alt={service.name}
-                      className="aspect-video"
+                      className="aspect-video shrink-0"
                     />
                   ) : "imageUrl" in service && service.imageUrl ? (
-                    <div className="relative aspect-video w-full">
+                    <div className="relative aspect-video w-full shrink-0">
                       <CmsImage src={service.imageUrl} alt={service.name} fill />
                     </div>
                   ) : null}
-                  <div className="p-6">
+                  <div className="flex flex-1 flex-col p-6">
                     <h2 className="font-display text-2xl text-white">{service.name}</h2>
-                    <p className="mt-2 text-cool-grey">{service.description}</p>
+                    <p className="mt-2 flex-1 text-cool-grey">{service.description}</p>
                   </div>
                 </article>
               </ScrollReveal>

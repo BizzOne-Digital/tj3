@@ -1,4 +1,4 @@
-import { BRAND } from "./constants";
+import { BRAND, HERO_BG } from "./constants";
 import { DRIVE_IMAGE_MAP, DRIVE_OFFERING_FILE_PREFIX } from "./drive-images";
 
 /** Synced from public/New Building Website — run `npm run sync:images` */
@@ -192,7 +192,7 @@ export const SHOP_CONTENT = {
 };
 
 export const ABOUT_CONTENT = {
-  subtitle: "A Vision for Today. A Legacy for Tomorrow.",
+  subtitle: "VISION FOR TODAY. A LEGACY FOR TOMORROW.",
   html: `
 <p><strong>Coming Soon to Clearfield County</strong></p>
 <p>Little Mounties Community Sports Complex is your one-stop shop for sports—a next-generation indoor sports and family entertainment facility coming to Clearfield County.</p>
@@ -212,6 +212,108 @@ export const ABOUT_CONTENT = {
 <p><strong>A Place to Gather. A Community to Grow. A Future to Build.</strong></p>
 `,
 };
+
+export const STATIC_NEWS = [
+  {
+    _id: "static-news-1",
+    title: "Coming Soon to Clearfield County",
+    slug: "coming-soon-clearfield-county",
+    excerpt:
+      "Little Mounties Community Sports Complex is bringing a next-generation indoor sports and family entertainment destination to Central Pennsylvania.",
+    content: `
+<p>We are excited to share that <strong>Little Mounties Community Sports Complex</strong> is coming to Clearfield County—a one-stop destination for sports, training, family entertainment, and community connection.</p>
+<p>The facility will feature high-tech baseball and softball training, multi-sport courts, and a massive two-story play zone designed for year-round use. From elite athlete development to birthday parties and family experiences, everything is being planned under one roof.</p>
+<p><strong>VISION FOR TODAY. A LEGACY FOR TOMORROW.</strong></p>
+<p>Follow our Facebook Page and check back here for construction updates, partnership news, and grand opening announcements.</p>
+`,
+    imageUrl: HERO_BG,
+    author: "Tj Anderson",
+    published: true,
+    publishedAt: "2025-11-15T12:00:00.000Z",
+    featured: true,
+  },
+  {
+    _id: "static-news-2",
+    title: "Capital Campaign Now Underway",
+    slug: "capital-campaign-underway",
+    excerpt:
+      "Invest in our community. Explore naming rights, sponsorship tiers, and ways to leave a legacy that lasts.",
+    content: `
+<p>The <strong>Little Mounties Community Sports Complex capital campaign</strong> is officially underway. This project is designed to serve youth, families, and the greater Clearfield County community—regardless of background or circumstance.</p>
+<p>Giving opportunities include facility naming rights, court naming rights, locker room naming, and accessible community supporter tiers from Mountie Friend to Platinum Mountie Sponsor.</p>
+<p>Visit our <strong>Sponsorship</strong> page for full details, or donate any amount through our secure Zeffy link. Every gift helps build a stronger community for generations to come.</p>
+`,
+    imageUrl: "/images/welcome.jpg",
+    author: "Tj Anderson",
+    published: true,
+    publishedAt: "2025-12-01T12:00:00.000Z",
+    featured: true,
+  },
+  {
+    _id: "static-news-3",
+    title: "Leagues & Teams: Tell Us About Your Needs",
+    slug: "bring-your-league-here",
+    excerpt:
+      "Softball, baseball, volleyball, wrestling, lacrosse, or pickleball—help us plan space and programming before we open.",
+    content: `
+<p>Are you part of a league or team? We want to hear from you <em>before</em> Little Mounties Community Sports Complex opens.</p>
+<p>If you are interested in using our spaces, fill out the <strong>Bring Your League Here</strong> form. Tell us about your organization, age groups, seasonal or year-round needs, and tournament interest.</p>
+<p>Your input helps us design courts, training space, and programming that better serves leagues across Clearfield County and Central Pennsylvania.</p>
+`,
+    imageUrl: "/images/offering-1.jpg",
+    author: "Tj Anderson",
+    published: true,
+    publishedAt: "2026-01-08T12:00:00.000Z",
+  },
+  {
+    _id: "static-news-4",
+    title: "Partnership Opportunities Now Open",
+    slug: "partnership-opportunities-open",
+    excerpt:
+      "Coaches, trainers, retailers, food service, and local businesses—we are building an ecosystem and looking for the right partners.",
+    content: `
+<p>Little Mounties Community Sports Complex is more than a sports facility. It is a full ecosystem of training, entertainment, food, events, retail, wellness, and community partnerships.</p>
+<p>We are looking for experienced operators, coaches, business owners, brands, and local organizations who want to grow alongside one of Central Pennsylvania's largest indoor sports and family entertainment destinations.</p>
+<p>Partnership opportunities may include operating space, coaching programs, sponsored areas, retail, food and beverage, league hosting, and advisory roles. Submit the <strong>Partner With Us</strong> form to start the conversation.</p>
+`,
+    imageUrl: "/images/offering-3.jpg",
+    author: "Tj Anderson",
+    published: true,
+    publishedAt: "2026-01-22T12:00:00.000Z",
+  },
+  {
+    _id: "static-news-5",
+    title: "Join the Founding Members Interest List",
+    slug: "founding-members-interest-list",
+    excerpt:
+      "Memberships are not for sale yet—but you can be first to hear about camps, leagues, tournaments, and early access.",
+    content: `
+<p>We are <strong>not selling memberships… yet.</strong> But if you are interested in being a future member, let us know!</p>
+<p>Join the founding members interest list to receive updates about memberships, camps, lessons, tournaments, leagues, batting suites, play zone access, adult leagues, and more.</p>
+<p>Complete the short form on our <strong>Founding Members</strong> page and tell us which sports and programs matter most to your family.</p>
+`,
+    imageUrl: "/images/offering-5.jpg",
+    author: "Tj Anderson",
+    published: true,
+    publishedAt: "2026-02-05T12:00:00.000Z",
+  },
+  {
+    _id: "static-news-6",
+    title: "Year-Round Programming Planned for Athletes & Families",
+    slug: "year-round-programming-planned",
+    excerpt:
+      "Camps, clinics, tournaments, team training, and family entertainment—designed to keep the facility active in every season.",
+    content: `
+<p>Little Mounties Community Sports Complex is being built to stay active all year long across Central Pennsylvania.</p>
+<p>Planned programming includes baseball and softball training, multi-sport camps and clinics, strength and speed training, team practices and rentals, tournaments and showcases, youth leagues, corporate events, and family entertainment experiences.</p>
+<p>Explore our <strong>Facility & Services</strong> page to learn more about athletic development, family entertainment, and everything we are planning to offer under one roof.</p>
+`,
+    imageUrl: "/images/offering-7.jpg",
+    author: "Tj Anderson",
+    published: true,
+    publishedAt: "2026-02-20T12:00:00.000Z",
+  },
+] as const;
 
 export const STATIC_FAQ = [
   {
