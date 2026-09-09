@@ -45,6 +45,10 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         address={settings?.address}
         email={settings?.contactEmail}
         phone={settings?.contactPhone}
+        logoUrl={settings?.logoUrl}
+        facebookUrl={settings?.facebookUrl}
+        donationUrl={settings?.zeffyDonationUrl}
+        tagline={settings?.tagline}
       />
     </>
   );

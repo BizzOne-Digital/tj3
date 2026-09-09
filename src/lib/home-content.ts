@@ -1,21 +1,26 @@
 import { BRAND, CONCEPT_IMAGES } from "./constants";
 
-/** Image paths — replace files in public/images/ when client provides Drive photos */
+/** Client Drive photos copied to public/images/ */
 export const SITE_IMAGES = {
   welcome: "/images/welcome.jpg",
   courtPlan1: "/images/court-plan-1.jpg",
   courtPlan2: "/images/court-plan-2.jpg",
-  offeringAthletic: "/images/offering-2.jpg",
-  offeringFamily: "/images/offering-4.jpg",
-  offeringCamps: "/images/offering-6.jpg",
-  offeringMore: "/images/offering-1.jpg",
+  offeringAthletic: "/images/offering-1.jpg",
+  offeringFamily: "/images/offering-2.jpg",
+  offeringCamps: "/images/offering-3.jpg",
+  offeringMore: "/images/offering-4.jpg",
   products: "/images/products.png",
   campaignProspectus: "/images/campaign-prospectus.pdf",
 } as const;
 
+/** Main page offerings folder — shown as one gallery block (not per text tab) */
 export const OFFERING_GALLERY = [
+  "/images/offering-1.jpg",
+  "/images/offering-2.jpg",
   "/images/offering-3.jpg",
+  "/images/offering-4.jpg",
   "/images/offering-5.jpg",
+  "/images/offering-6.jpg",
   "/images/offering-7.jpg",
 ] as const;
 
@@ -43,7 +48,7 @@ export const HOME_WELCOME = {
     "The facility will feature high-tech baseball and softball training, multi-sport courts, and a massive two-story play zone designed for year-round use.",
     "From elite athlete development to birthday parties and family experiences, Little Mounties Community Sports Complex brings everything under one roof.",
   ],
-  legacyLine: "A Vision for Today. A Legacy for Tomorrow.",
+  legacyLine: "Vision for Today. A Legacy for Tomorrow.",
   mission:
     "Our mission is to build a state-of-the-art recreation center that will serve youth, families, and the greater community—regardless of background or circumstance. This center will be a hub of opportunity, wellness, and connection.",
   visionTitle: "Vision",

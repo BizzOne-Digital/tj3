@@ -24,7 +24,6 @@ import {
 } from "@/lib/home-content";
 import Link from "next/link";
 import { Check, ExternalLink } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 export function WelcomeSection() {
   return (
@@ -51,7 +50,7 @@ export function WelcomeSection() {
           </div>
         </div>
         <ScrollReveal>
-          <SiteImage imageKey="welcome" alt="Little Mounties capital campaign" className="aspect-[4/3] rounded-2xl" objectFit="contain" />
+          <SiteImage imageKey="welcome" alt="Little Mounties Community Sports Complex" className="aspect-[4/3] rounded-2xl" objectFit="contain" />
         </ScrollReveal>
       </div>
     </SectionBlock>
@@ -105,9 +104,8 @@ export function LeagueCTASection() {
 
 export function OfferingsSection() {
   const blocks = [
-    { key: "offeringAthletic" as const, ...OFFERINGS.athletic },
+    OFFERINGS.athletic,
     {
-      key: "offeringFamily" as const,
       ...OFFERINGS.family,
       extra: OFFERINGS.family.bullets,
       closing: OFFERINGS.family.closing,
@@ -115,13 +113,11 @@ export function OfferingsSection() {
       playStructure: OFFERINGS.family.playStructure,
     },
     {
-      key: "offeringCamps" as const,
       ...OFFERINGS.camps,
       extra: OFFERINGS.camps.bullets,
       goal: OFFERINGS.camps.goal,
     },
     {
-      key: "offeringMore" as const,
       ...OFFERINGS.more,
       extra: OFFERINGS.more.bullets,
       closing: OFFERINGS.more.closing,
@@ -135,55 +131,50 @@ export function OfferingsSection() {
       title="What Is Little Mounties Community Sports Complex Offering?"
     >
       <p>{OFFERINGS.intro}</p>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {OFFERING_GALLERY.map((src) => (
+          <SiteGalleryImage key={src} src={src} alt="Facility offerings preview" className="aspect-[4/3]" />
+        ))}
+      </div>
+
       <div className="space-y-16">
         {blocks.map((block, i) => (
           <ScrollReveal key={block.title} delay={i * 0.05}>
-            <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
-              <div className={cn("min-w-0", i % 2 === 1 ? "lg:order-2" : "")}>
-                <h3 className="break-words font-display text-[clamp(1.5rem,5vw,1.875rem)] text-white">
-                  {block.title}
-                </h3>
-                <p className="mt-4 leading-relaxed">{block.body}</p>
-                {"extra" in block && block.extra && (
-                  <ul className="mt-4 space-y-2">
-                    {"playStructure" in block && block.playStructure && (
-                      <p className="mb-3 leading-relaxed">{block.playStructure}</p>
-                    )}
-                    {block.extra.map((item) => (
-                      <li key={item} className="flex gap-2">
-                        <Check className="mt-1 h-4 w-4 shrink-0 text-ice" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                {"closing" in block && block.closing && <p className="mt-4">{block.closing}</p>}
-                {"goal" in block && block.goal && (
-                  <p className="mt-4 font-medium text-ice">{block.goal}</p>
-                )}
-              </div>
-              <SiteImage
-                imageKey={block.key}
-                alt={block.title}
-                className={cn("aspect-video rounded-2xl", i % 2 === 1 ? "lg:order-1" : "", "min-w-0 w-full")}
-              />
+            <div className="min-w-0">
+              <h3 className="break-words font-display text-[clamp(1.5rem,5vw,1.875rem)] text-white">
+                {block.title}
+              </h3>
+              <p className="mt-4 leading-relaxed">{block.body}</p>
+              {"extra" in block && block.extra && (
+                <ul className="mt-4 space-y-2">
+                  {"playStructure" in block && block.playStructure && (
+                    <p className="mb-3 leading-relaxed">{block.playStructure}</p>
+                  )}
+                  {block.extra.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <Check className="mt-1 h-4 w-4 shrink-0 text-ice" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {"closing" in block && block.closing && <p className="mt-4">{block.closing}</p>}
+              {"goal" in block && block.goal && (
+                <p className="mt-4 font-medium text-ice">{block.goal}</p>
+              )}
             </div>
           </ScrollReveal>
         ))}
       </div>
-      <div className="pt-8">
-        <SiteImage imageKey="products" alt="Built for more than basketball" className="aspect-[21/9] rounded-2xl" objectFit="contain" />
+
+      <div className="border-t border-border pt-10">
+        <SiteImage imageKey="products" alt="View products" className="aspect-[21/9] rounded-2xl" objectFit="contain" />
         <div className="mt-6">
           <Button href="/shop" variant="outline">
             View Products
           </Button>
         </div>
-      </div>
-
-      <div className="grid gap-4 pt-10 sm:grid-cols-3">
-        {OFFERING_GALLERY.map((src) => (
-          <SiteGalleryImage key={src} src={src} alt="Community sports programming" className="aspect-[4/3]" />
-        ))}
       </div>
     </SectionBlock>
   );
@@ -213,18 +204,10 @@ export function CampaignSection() {
         <p className="mt-4 max-w-3xl break-words font-display text-base uppercase leading-snug tracking-wide text-ice sm:text-lg">
           {CAMPAIGN_HEADLINE}
         </p>
-        <div className="mt-8 grid min-w-0 gap-8 lg:grid-cols-2">
-          <ScrollReveal className="min-w-0">
-            <SiteImage
-              imageKey="welcome"
-              alt="Capital campaign prospectus"
-              className="aspect-[4/3] w-full rounded-2xl"
-              objectFit="contain"
-            />
-          </ScrollReveal>
-          <div className="glass-panel flex min-w-0 flex-col justify-center rounded-2xl p-6 sm:p-8">
-            <p className="text-sm uppercase tracking-[0.25em] text-ice">Download</p>
-            <h3 className="mt-3 font-display text-2xl text-white">Campaign Draft Prospectus</h3>
+        <ScrollReveal className="mt-8">
+          <div className="glass-panel mx-auto flex min-w-0 max-w-3xl flex-col rounded-2xl p-6 sm:p-8">
+            <p className="text-sm uppercase tracking-[0.25em] text-ice">Campaign Draft Prospectus</p>
+            <h3 className="mt-3 font-display text-2xl text-white">Capital Campaign Prospectus</h3>
             <p className="mt-4 text-cool-grey">
               Review the full capital campaign prospectus with giving levels, recognition opportunities, and
               community impact details.
@@ -233,16 +216,18 @@ export function CampaignSection() {
               <Button href="/images/campaign-prospectus.pdf" external>
                 View Prospectus PDF
               </Button>
-              <Button href="/pricing">View Sponsorship Tiers</Button>
+              <Button href="/pricing" variant="outline">
+                View Sponsorship Tiers
+              </Button>
             </div>
           </div>
-          <div className="flex min-w-0 flex-col justify-center gap-6 lg:col-span-2">
-            <p className="text-cool-grey">
-              From facility naming rights to community supporter tiers, every gift helps build Clearfield
-              County&apos;s next-generation sports destination.
-            </p>
-            <ZeffyPayButton href={ZEFFY_URL} label="Donate Any Amount" />
-          </div>
+        </ScrollReveal>
+        <div className="mx-auto mt-8 flex min-w-0 max-w-3xl flex-col items-center gap-6 text-center">
+          <p className="text-cool-grey">
+            From facility naming rights to community supporter tiers, every gift helps build Clearfield
+            County&apos;s next-generation sports destination.
+          </p>
+          <ZeffyPayButton href={ZEFFY_URL} label="Donate Any Amount" />
         </div>
       </div>
     </section>

@@ -79,7 +79,7 @@ export function Header({
     >
       <div className="relative mx-auto flex min-w-0 max-w-[1400px] items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:py-4">
         <Link href="/" className="relative z-10 min-w-0 shrink">
-          <Logo src={logoUrl} size={isHero ? "md" : "md"} priority />
+          <Logo src={logoUrl} size={isHero ? "lg" : "md"} priority />
         </Link>
 
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">

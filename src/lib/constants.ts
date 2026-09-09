@@ -8,7 +8,7 @@ export const CONCEPT_IMAGES = {
   architecture: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80",
 };
 
-export const BRAND_LOGO = "/logo.jpg";
+export const BRAND_LOGO = "/logo.png";
 export const HERO_BG = "/hero-bg.jpg";
 
 export const BRAND = {
@@ -27,7 +27,7 @@ export const BRAND = {
     "A Vision for Today. A Legacy for Tomorrow.",
   ],
   heroDescription:
-    "A next-generation indoor sports and family entertainment destination—bringing training, play, events, and opportunity together under one roof.",
+    "A next-generation indoor sports and family entertainment destination bringing training, play, events, and opportunity together under one roof.",
 };
 
 export const NAV_LINKS = [

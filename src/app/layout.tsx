@@ -5,7 +5,6 @@ import type { Metadata } from "next";
 import { Bebas_Neue, DM_Sans } from "next/font/google";
 import { Toaster } from "sonner";
 import { buildMetadata } from "@/lib/seo";
-import { BRAND_LOGO } from "@/lib/constants";
 import "./globals.css";
 
 const bebas = Bebas_Neue({
@@ -22,8 +21,8 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   ...buildMetadata({}),
   icons: {
-    icon: BRAND_LOGO,
-    apple: BRAND_LOGO,
+    icon: [{ url: "/logo.png", type: "image/png" }],
+    apple: "/apple-icon.png",
   },
 };
 
