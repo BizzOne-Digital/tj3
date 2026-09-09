@@ -49,14 +49,14 @@ export function HomeHero({
           alt="Little Mounties Community Sports Complex"
           fill
           priority
-          className="object-cover object-[28%_center] sm:object-[35%_center] lg:object-[42%_center]"
+          className="object-cover object-[72%_center] sm:object-[78%_center] lg:object-right"
           sizes="100vw"
         />
 
-        {/* Left-heavy overlay for headline readability (matches mockup) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#030812]/98 via-[#030812]/75 to-[#030812]/15" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#030812] via-[#030812]/20 to-transparent" />
-        <div className="absolute inset-0 hero-grid opacity-25" />
+        {/* Left overlay keeps headline readable; right stays open for the building */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#030812]/95 via-[#030812]/55 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#030812]/85 via-transparent to-[#030812]/25" />
+        <div className="absolute inset-0 hero-grid opacity-20" />
 
         <div className="relative mx-auto flex min-h-[calc(100vh-7rem)] w-full min-w-0 max-w-[1400px] flex-col justify-center px-4 py-14 sm:px-6 lg:min-h-[92vh] lg:flex-row lg:items-center lg:justify-between lg:py-16">
           <motion.div

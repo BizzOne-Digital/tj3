@@ -7,9 +7,12 @@ const nextConfig: NextConfig = {
   },
   images: {
     localPatterns: [
-      {
-        pathname: "/api/uploads/**",
-      },
+      { pathname: "/api/uploads/**" },
+      { pathname: "/images/**" },
+      { pathname: "/hero-bg.jpg" },
+      { pathname: "/logo.png" },
+      { pathname: "/logo.jpg" },
+      { pathname: "/apple-icon.png" },
     ],
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },

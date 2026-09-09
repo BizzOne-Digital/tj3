@@ -1,54 +1,47 @@
-import { BRAND, CONCEPT_IMAGES } from "./constants";
+import { BRAND } from "./constants";
+import { DRIVE_IMAGE_MAP, DRIVE_OFFERING_FILE_PREFIX } from "./drive-images";
 
-/** Client Drive photos copied to public/images/ */
+/** Synced from public/New Building Website — run `npm run sync:images` */
 export const SITE_IMAGES = {
-  welcome: "/images/welcome.jpg",
-  courtPlan1: "/images/court-plan-1.jpg",
-  courtPlan2: "/images/court-plan-2.jpg",
-  offeringAthletic: "/images/offering-1.jpg",
-  offeringFamily: "/images/offering-2.jpg",
-  offeringCamps: "/images/offering-3.jpg",
-  offeringMore: "/images/offering-4.jpg",
-  products: "/images/products.png",
-  campaignProspectus: "/images/campaign-prospectus.pdf",
+  welcome: DRIVE_IMAGE_MAP.welcome.publicPath,
+  courtPlan1: DRIVE_IMAGE_MAP.courtPlan1.publicPath,
+  courtPlan2: DRIVE_IMAGE_MAP.courtPlan2.publicPath,
+  products: DRIVE_IMAGE_MAP.products.publicPath,
+  campaignProspectus: DRIVE_IMAGE_MAP.campaignProspectus.publicPath,
 } as const;
 
-/** Main page offerings folder — shown as one gallery block (not per text tab) */
+/** Main Page Pictures / offering folder — one gallery block on homepage (not per text tab) */
 export const OFFERING_GALLERY = [
-  "/images/offering-1.jpg",
-  "/images/offering-2.jpg",
-  "/images/offering-3.jpg",
-  "/images/offering-4.jpg",
-  "/images/offering-5.jpg",
-  "/images/offering-6.jpg",
-  "/images/offering-7.jpg",
+  `/images/${DRIVE_OFFERING_FILE_PREFIX}-1.jpg`,
+  `/images/${DRIVE_OFFERING_FILE_PREFIX}-2.jpg`,
+  `/images/${DRIVE_OFFERING_FILE_PREFIX}-3.jpg`,
+  `/images/${DRIVE_OFFERING_FILE_PREFIX}-4.jpg`,
+  `/images/${DRIVE_OFFERING_FILE_PREFIX}-5.jpg`,
+  `/images/${DRIVE_OFFERING_FILE_PREFIX}-6.jpg`,
+  `/images/${DRIVE_OFFERING_FILE_PREFIX}-7.jpg`,
 ] as const;
 
 export const IMAGE_FALLBACKS: Record<keyof typeof SITE_IMAGES, string> = {
-  welcome: CONCEPT_IMAGES.architecture,
-  courtPlan1: CONCEPT_IMAGES.basketball,
-  courtPlan2: CONCEPT_IMAGES.training,
-  offeringAthletic: CONCEPT_IMAGES.baseball,
-  offeringFamily: CONCEPT_IMAGES.family,
-  offeringCamps: CONCEPT_IMAGES.community,
-  offeringMore: CONCEPT_IMAGES.basketball,
-  products: CONCEPT_IMAGES.training,
-  campaignProspectus: CONCEPT_IMAGES.architecture,
+  welcome: "/images/placeholder.svg",
+  courtPlan1: "/images/placeholder.svg",
+  courtPlan2: "/images/placeholder.svg",
+  products: "/images/placeholder.svg",
+  campaignProspectus: "/images/placeholder.svg",
 };
 
 export const ZEFFY_URL = BRAND.donationUrl;
 export const FACEBOOK_URL = BRAND.facebook;
 
 export const HOME_WELCOME = {
-  badge: "Coming Soon to Clearfield County",
+  badge: "‼Coming Soon to Clearfield County‼",
   headline: "Little Mounties Community Sports Complex",
-  subheadline: "Your one-stop shop for sports.",
+  subheadline: "Little Mounties Community Sports Complex, one stop shop for the sports.",
   paragraphs: [
     "Little Mounties Community Sports Complex is a next-generation indoor sports and family entertainment facility coming to Clearfield County.",
     "The facility will feature high-tech baseball and softball training, multi-sport courts, and a massive two-story play zone designed for year-round use.",
     "From elite athlete development to birthday parties and family experiences, Little Mounties Community Sports Complex brings everything under one roof.",
   ],
-  legacyLine: "Vision for Today. A Legacy for Tomorrow.",
+  legacyLine: "VISION FOR TODAY. A LEGACY FOR TOMORROW.",
   mission:
     "Our mission is to build a state-of-the-art recreation center that will serve youth, families, and the greater community—regardless of background or circumstance. This center will be a hub of opportunity, wellness, and connection.",
   visionTitle: "Vision",
@@ -266,37 +259,31 @@ export const STATIC_SERVICES = [
     name: "Athletic Development",
     description:
       "Dedicated baseball and softball coaching with training tunnels, turf space, fitness area, and HitTrax Pro analytics for measurable athlete development.",
-    imageKey: "offeringAthletic" as const,
   },
   {
     name: "Family Entertainment",
     description:
       "Interactive play zones, sports simulators, automated batting cages, birthday parties, food and social spaces for the whole family.",
-    imageKey: "offeringFamily" as const,
   },
   {
     name: "Camps, Clinics & Tournaments",
     description:
       "Year-round programming including multi-sport camps, leagues, tournaments, team training, and corporate events across Central Pennsylvania.",
-    imageKey: "offeringCamps" as const,
   },
   {
     name: "Leagues & Team Rentals",
     description:
       "Indoor courts and training space for softball, baseball, volleyball, wrestling, lacrosse, pickleball, and more.",
-    imageKey: "courtPlan1" as const,
   },
   {
     name: "Memberships",
     description:
       "Future membership options with special hours, discounts, and perks for regular visitors. Join the founding members list for early access updates.",
-    imageKey: "offeringMore" as const,
   },
   {
     name: "Partnerships & Sponsorship",
     description:
       "Naming rights, premium sponsorship tiers, retail, food & beverage, and coaching partnerships inside our community sports ecosystem.",
-    imageKey: "welcome" as const,
   },
 ];
 

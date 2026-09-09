@@ -50,7 +50,12 @@ export function WelcomeSection() {
           </div>
         </div>
         <ScrollReveal>
-          <SiteImage imageKey="welcome" alt="Little Mounties Community Sports Complex" className="aspect-[4/3] rounded-2xl" objectFit="contain" />
+          <SiteImage
+            imageKey="welcome"
+            alt="Little Mounties Community Sports Complex welcome"
+            className="aspect-[4/3] rounded-2xl"
+            objectFit="contain"
+          />
         </ScrollReveal>
       </div>
     </SectionBlock>
