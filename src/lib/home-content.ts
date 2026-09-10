@@ -59,7 +59,9 @@ export const HOME_WELCOME = {
 export const LEAGUE_SPORTS = [
   "Softball",
   "Baseball",
+  "Basketball",
   "Volleyball",
+  "Tennis",
   "Wrestling",
   "Lacrosse",
   "Pickleball",
@@ -254,7 +256,7 @@ export const STATIC_NEWS = [
     title: "Leagues & Teams: Tell Us About Your Needs",
     slug: "bring-your-league-here",
     excerpt:
-      "Softball, baseball, volleyball, wrestling, lacrosse, or pickleball—help us plan space and programming before we open.",
+      "Softball, baseball, basketball, volleyball, tennis, wrestling, lacrosse, or pickleball—help us plan space and programming before we open.",
     content: `
 <p>Are you part of a league or team? We want to hear from you <em>before</em> Little Mounties Community Sports Complex opens.</p>
 <p>If you are interested in using our spaces, fill out the <strong>Bring Your League Here</strong> form. Tell us about your organization, age groups, seasonal or year-round needs, and tournament interest.</p>
