@@ -127,7 +127,12 @@ export function OfferingsSection() {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {OFFERING_GALLERY.map((src) => (
-          <SiteGalleryImage key={src} src={src} alt="Facility offerings preview" className="aspect-[4/3]" />
+          <SiteGalleryImage
+            key={src}
+            src={src}
+            alt="Facility offerings preview"
+            className="aspect-[4/5] min-h-[280px] sm:min-h-[320px] lg:min-h-[360px]"
+          />
         ))}
       </div>
 

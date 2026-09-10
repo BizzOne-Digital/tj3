@@ -1,6 +1,7 @@
 import { ScrollReveal } from "@/components/animation/ScrollReveal";
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
+import { Button } from "@/components/ui/Button";
 import { CmsImage } from "@/components/ui/CmsImage";
 import { api } from "@/lib/api";
 import { BRAND } from "@/lib/constants";
@@ -61,7 +62,10 @@ export default async function TeamPage() {
               </ScrollReveal>
             ))}
           </div>
-          <div className="mx-auto mt-12 flex max-w-md flex-col gap-4 text-cool-grey">
+          <div className="mx-auto mt-12 flex max-w-md flex-col items-center gap-6 text-cool-grey">
+            <Button href="/booster-schedule" variant="outline">
+              Varsity Booster Schedule
+            </Button>
             <a href={`mailto:${BRAND.email}`} className="flex items-center justify-center gap-2 hover:text-ice">
               <Mail className="h-4 w-4" />
               {BRAND.email}

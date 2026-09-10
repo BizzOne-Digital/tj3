@@ -75,20 +75,36 @@ export function SiteGalleryImage({
   src,
   alt,
   className,
+  objectFit = "contain",
+  objectPosition = "center",
 }: {
   src: string;
   alt: string;
   className?: string;
+  objectFit?: "cover" | "contain";
+  objectPosition?: "center" | "top" | "bottom";
 }) {
   return (
-    <div className={cn("relative w-full max-w-full overflow-hidden rounded-2xl bg-graphite", className)}>
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        className="object-cover"
-        sizes="(max-width: 768px) 100vw, 33vw"
-      />
+    <div className={cn("relative w-full max-w-full overflow-hidden rounded-2xl bg-[#0a1428]", className)}>
+      <div
+        className={cn(
+          "absolute inset-0",
+          objectFit === "contain" && "inset-2 sm:inset-3",
+          "relative",
+        )}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className={cn(
+            objectFit === "contain" ? "object-contain" : "object-cover",
+            objectPosition === "top" && objectFit === "cover" && "object-top",
+            objectPosition === "bottom" && objectFit === "cover" && "object-bottom",
+          )}
+          sizes="(max-width: 768px) 100vw, 33vw"
+        />
+      </div>
     </div>
   );
 }

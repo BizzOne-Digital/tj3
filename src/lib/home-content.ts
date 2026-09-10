@@ -38,7 +38,7 @@ export const HOME_WELCOME = {
   subheadline: "Little Mounties Community Sports Complex, one stop shop for the sports.",
   paragraphs: [
     "Little Mounties Community Sports Complex is a next-generation indoor sports and family entertainment facility coming to Clearfield County.",
-    "The facility will feature high-tech baseball and softball training, multi-sport courts, and a massive two-story play zone designed for year-round use.",
+    "The facility will feature high-tech baseball and softball training, indoor basketball and multi-sport courts, and a massive two-story play zone designed for year-round use.",
     "From elite athlete development to birthday parties and family experiences, Little Mounties Community Sports Complex brings everything under one roof.",
   ],
   legacyLine: "VISION FOR TODAY. A LEGACY FOR TOMORROW.",
@@ -196,7 +196,7 @@ export const ABOUT_CONTENT = {
   html: `
 <p><strong>Coming Soon to Clearfield County</strong></p>
 <p>Little Mounties Community Sports Complex is your one-stop shop for sports—a next-generation indoor sports and family entertainment facility coming to Clearfield County.</p>
-<p>The facility will feature high-tech baseball and softball training, multi-sport courts, and a massive two-story play zone designed for year-round use. From elite athlete development to birthday parties and family experiences, Little Mounties Community Sports Complex brings everything under one roof.</p>
+<p>The facility will feature high-tech baseball and softball training, indoor basketball and multi-sport courts, and a massive two-story play zone designed for year-round use. From elite athlete development to birthday parties and family experiences, Little Mounties Community Sports Complex brings everything under one roof.</p>
 <p>Our mission is to build a state-of-the-art recreation center that will serve youth, families, and the greater community—regardless of background or circumstance. This center will be a hub of opportunity, wellness, and connection.</p>
 <h3>Vision</h3>
 <p>A fully developed sports complex that includes:</p>
@@ -222,7 +222,7 @@ export const STATIC_NEWS = [
       "Little Mounties Community Sports Complex is bringing a next-generation indoor sports and family entertainment destination to Central Pennsylvania.",
     content: `
 <p>We are excited to share that <strong>Little Mounties Community Sports Complex</strong> is coming to Clearfield County—a one-stop destination for sports, training, family entertainment, and community connection.</p>
-<p>The facility will feature high-tech baseball and softball training, multi-sport courts, and a massive two-story play zone designed for year-round use. From elite athlete development to birthday parties and family experiences, everything is being planned under one roof.</p>
+<p>The facility will feature high-tech baseball and softball training, indoor basketball and multi-sport courts, and a massive two-story play zone designed for year-round use. From elite athlete development to birthday parties and family experiences, everything is being planned under one roof.</p>
 <p><strong>VISION FOR TODAY. A LEGACY FOR TOMORROW.</strong></p>
 <p>Follow our Facebook Page and check back here for construction updates, partnership news, and grand opening announcements.</p>
 `,

@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ["mongoose", "mongodb", "bcryptjs", "jsonwebtoken"],
+  serverExternalPackages: ["mongoose", "mongodb", "bcryptjs", "jsonwebtoken", "nodemailer"],
   typescript: {
     ignoreBuildErrors: true,
   },

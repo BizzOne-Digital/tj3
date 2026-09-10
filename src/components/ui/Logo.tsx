@@ -15,10 +15,10 @@ export function Logo({
   priority?: boolean;
 }) {
   const sizes = {
-    sm: "h-9 w-auto sm:h-10",
-    md: "h-11 w-auto sm:h-14",
-    lg: "h-14 w-auto sm:h-[4.5rem]",
-    xl: "h-20 w-auto sm:h-24",
+    sm: "h-10 w-10 sm:h-11 sm:w-11",
+    md: "h-12 w-12 sm:h-14 sm:w-14",
+    lg: "h-16 w-16 sm:h-20 sm:w-20",
+    xl: "h-24 w-24 sm:h-28 sm:w-28",
   };
 
   const imageSrc = resolveImageUrl(src || BRAND_LOGO);
@@ -28,11 +28,11 @@ export function Logo({
     <Image
       src={imageSrc}
       alt="Little Mounties Community Sports Complex"
-      width={520}
-      height={140}
+      width={280}
+      height={280}
       priority={priority}
       unoptimized={isApiUpload || imageSrc.endsWith(".png")}
-      className={cn("h-auto w-auto object-contain object-left", sizes[size], className)}
+      className={cn("object-contain", sizes[size], className)}
     />
   );
 }

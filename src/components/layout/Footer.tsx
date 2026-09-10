@@ -15,6 +15,7 @@ const MORE_LINKS = [
   { href: "/booking", label: "Booking" },
   { href: "/shop", label: "Shop" },
   { href: "/team", label: "Team" },
+  { href: "/booster-schedule", label: "Booster Schedule" },
   { href: "/faq", label: "FAQ" },
 ];
 
@@ -48,7 +49,7 @@ export function Footer({
           {/* Brand */}
           <div className="min-w-0 lg:col-span-4">
             <Link href="/" className="inline-block max-w-full">
-              <Logo src={logo} size="lg" className="max-w-[min(100%,320px)]" />
+              <Logo src={logo} size="lg" className="max-w-[min(100%,160px)]" />
             </Link>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-cool-grey">
               {tagline || BRAND.taglines[0]}
