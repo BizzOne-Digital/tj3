@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
+import { BRAND_LOGO } from "@/lib/constants";
 import { RESOURCE_MAP, ResourceKey, SiteSettings } from "@/lib/models";
 
 export function jsonOk<T>(data: T, extra?: Record<string, unknown>) {
@@ -38,7 +39,7 @@ export async function getSettingsDoc() {
     settings = await SiteSettings.create({
       siteName: "Little Mounties Community Sports Complex",
       tagline: "Building More Than a Gym — Building a Stronger Community",
-      logoUrl: "/logo.jpg",
+      logoUrl: BRAND_LOGO,
       contactEmail: "tjandersty@gmail.com",
       contactPhone: "814-500-8613",
       contactPerson: "Tj Anderson",

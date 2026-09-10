@@ -1,3 +1,5 @@
+import { BRAND_LOGO } from "./constants";
+
 export const UPLOAD_FOLDERS = ["products", "gallery", "pages", "misc"] as const;
 export type UploadFolder = (typeof UPLOAD_FOLDERS)[number];
 
@@ -21,12 +23,21 @@ const MIME_TO_EXT: Record<AllowedMimeType, string> = {
   "image/gif": "gif",
 };
 
+const STALE_LOGO_PATHS = new Set(["/logo.jpg", "/logo.jpeg", "/logo.svg"]);
+
 export function isStoredUploadUrl(url: string): boolean {
   return url.startsWith("/api/uploads/");
 }
 
 export function isLegacyDiskUploadUrl(url: string): boolean {
   return url.startsWith("/uploads/");
+}
+
+/** Prefer the current brand logo; ignore stale DB paths from older deployments. */
+export function resolveSiteLogo(logoUrl?: string | null): string {
+  if (!logoUrl || STALE_LOGO_PATHS.has(logoUrl)) return BRAND_LOGO;
+  if (isLegacyDiskUploadUrl(logoUrl)) return BRAND_LOGO;
+  return logoUrl;
 }
 
 export function parseStoredUploadUrl(
@@ -81,4 +92,8 @@ export function resolveImageUrl(url?: string | null): string {
   if (!url) return IMAGE_PLACEHOLDER;
   if (isLegacyDiskUploadUrl(url)) return IMAGE_PLACEHOLDER;
   return url;
+}
+
+export function resolveSiteLogoUrl(logoUrl?: string | null): string {
+  return resolveImageUrl(resolveSiteLogo(logoUrl));
 }

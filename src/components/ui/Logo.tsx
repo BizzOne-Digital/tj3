@@ -1,8 +1,6 @@
 import Image from "next/image";
-import { BRAND_LOGO } from "@/lib/constants";
-import { resolveImageUrl } from "@/lib/upload-helpers";
+import { isStoredUploadUrl, resolveSiteLogoUrl } from "@/lib/upload-helpers";
 import { cn } from "@/lib/utils";
-
 export function Logo({
   src,
   className,
@@ -21,8 +19,8 @@ export function Logo({
     xl: "h-24 w-24 sm:h-28 sm:w-28",
   };
 
-  const imageSrc = resolveImageUrl(src || BRAND_LOGO);
-  const isApiUpload = imageSrc.startsWith("/api/uploads/");
+  const imageSrc = resolveSiteLogoUrl(src);
+  const isApiUpload = isStoredUploadUrl(imageSrc);
 
   return (
     <Image

@@ -1,4 +1,5 @@
-import { BRAND, BRAND_LOGO, NAV_LINKS } from "@/lib/constants";
+import { BRAND, NAV_LINKS } from "@/lib/constants";
+import { resolveSiteLogo } from "@/lib/upload-helpers";
 import { Logo } from "@/components/ui/Logo";
 import Link from "next/link";
 import { ExternalLink, Mail, MapPin, Phone } from "lucide-react";
@@ -40,7 +41,7 @@ export function Footer({
 }) {
   const supportUrl = donationUrl || BRAND.donationUrl;
   const fbUrl = facebookUrl || BRAND.facebook;
-  const logo = logoUrl || BRAND_LOGO;
+  const logo = resolveSiteLogo(logoUrl);
 
   return (
     <footer className="overflow-x-clip border-t border-electric/20 bg-[#030812]">
