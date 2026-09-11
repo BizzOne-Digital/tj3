@@ -672,9 +672,11 @@ export const FOUNDING_INTERESTS = [
 
 export const FOUNDING_SPORTS = [
   "Baseball/Softball",
+  "Basketball",
   "Golf",
   "Pickleball",
   "Volleyball",
+  "Tennis",
   "Soccer",
   "Lacrosse",
   "Wrestling",
