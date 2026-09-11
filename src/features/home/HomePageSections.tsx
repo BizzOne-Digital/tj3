@@ -21,9 +21,97 @@ import {
   STAY_CONNECTED_BULLETS,
   STAY_CONNECTED_FOOTER,
   PARTNER_CONTENT,
+  ALUMNI_SECTION,
+  PO_BASKETBALL_SECTION,
 } from "@/lib/home-content";
 import Link from "next/link";
 import { Check, ExternalLink } from "lucide-react";
+
+function AlumniSignUpLink({ className }: { className?: string }) {
+  return (
+    <Link
+      href={ALUMNI_SECTION.signUpUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+    >
+      <span className="mr-1" aria-hidden>
+        👉
+      </span>
+      {ALUMNI_SECTION.signUpLabel}:
+      <span className="ml-1 break-all text-ice underline decoration-ice/40 underline-offset-4 hover:text-white">
+        {ALUMNI_SECTION.signUpUrl.replace(/^https?:\/\//, "")}
+      </span>
+    </Link>
+  );
+}
+
+export function AlumniSection() {
+  return (
+    <section id="alumni" className="overflow-x-clip border-t border-border py-16 sm:py-20">
+      <div className="mx-auto min-w-0 max-w-7xl px-4 sm:px-6">
+        <ScrollReveal>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ice sm:tracking-[0.35em]">
+            {ALUMNI_SECTION.eyebrow}
+          </p>
+          <h2 className="mt-3 break-words font-display text-[clamp(1.75rem,7vw,2.75rem)] leading-tight text-white">
+            {ALUMNI_SECTION.title}
+          </h2>
+
+          <div className="glass-panel mt-8 max-w-3xl space-y-5 rounded-2xl p-6 sm:p-8">
+            <AlumniSignUpLink className="block text-sm font-semibold text-white sm:text-base" />
+
+            <p className="text-lg text-ice">{ALUMNI_SECTION.intro}</p>
+            <p className="leading-relaxed text-cool-grey">{ALUMNI_SECTION.invitation}</p>
+
+            <div>
+              <p className="font-semibold text-white">{ALUMNI_SECTION.helpsTitle}</p>
+              <ul className="mt-3 space-y-2">
+                {ALUMNI_SECTION.helpsBullets.map((item) => (
+                  <li key={item} className="flex gap-2 text-cool-grey">
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-ice" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <p className="leading-relaxed text-cool-grey">{ALUMNI_SECTION.signUpPrompt}</p>
+            <AlumniSignUpLink className="block text-sm font-semibold text-white sm:text-base" />
+
+            <p className="border-t border-border pt-5 text-base text-white">{ALUMNI_SECTION.closing}</p>
+            <p className="text-2xl" aria-hidden>
+              🏀💙
+            </p>
+
+            <Button href={ALUMNI_SECTION.signUpUrl} external size="lg" className="w-full sm:w-auto">
+              {ALUMNI_SECTION.signUpLabel}
+            </Button>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+export function PoBasketballSection() {
+  return (
+    <section id="po-basketball" className="overflow-x-clip border-t border-border py-12 gradient-bg sm:py-16">
+      <div className="mx-auto min-w-0 max-w-7xl px-4 text-center sm:px-6">
+        <ScrollReveal>
+          <h2 className="break-words font-display text-[clamp(1.75rem,7vw,3rem)] text-white">
+            {PO_BASKETBALL_SECTION.title}
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-cool-grey">{PO_BASKETBALL_SECTION.description}</p>
+          <Button href={PO_BASKETBALL_SECTION.url} external className="mt-8" size="lg">
+            <ExternalLink className="mr-2 h-4 w-4" />
+            {PO_BASKETBALL_SECTION.cta}
+          </Button>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
 
 export function WelcomeSection() {
   return (

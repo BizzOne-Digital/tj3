@@ -1,6 +1,8 @@
 import { HomeHero } from "@/features/home/HomeHero";
 import {
   WelcomeSection,
+  AlumniSection,
+  PoBasketballSection,
   LeagueCTASection,
   OfferingsSection,
   MembershipSection,
@@ -42,6 +44,8 @@ export default async function HomePage() {
         logoUrl={settings?.logoUrl}
         announcement={settings?.announcement}
       />
+      <AlumniSection />
+      <PoBasketballSection />
       <WelcomeSection />
       <LeagueCTASection />
       <PartnersCTASection />

@@ -32,6 +32,38 @@ export const IMAGE_FALLBACKS: Record<keyof typeof SITE_IMAGES, string> = {
 export const ZEFFY_URL = BRAND.donationUrl;
 export const FACEBOOK_URL = BRAND.facebook;
 
+export const MOUNTIE_BASKETBALL_URL = "https://www.mountiebasketball.com";
+
+/** Homepage — above P-O Basketball block */
+export const ALUMNI_SECTION = {
+  eyebrow: "Mountie Alumni",
+  title: "P-O Varsity Boys Basketball Alumni Sign-Up",
+  intro: "Mountie Alumni — we want to reconnect with YOU.",
+  invitation:
+    "If you ever wore the blue and white, stepped onto the court under those Friday night lights, or helped build the legacy of P-O Basketball, we invite you to officially join our P-O Varsity Boys Basketball Alumni Network.",
+  helpsTitle: "This form helps us:",
+  helpsBullets: [
+    "Celebrate our alumni throughout the season",
+    "Share special alumni events & recognition nights",
+    "Build a stronger connection between past and present Mounties",
+    "Keep you updated on program news, milestones, and opportunities to support our youth",
+  ],
+  signUpPrompt:
+    "Please take a moment to fill out the alumni form below — it only takes a minute, and it keeps our Mountie family strong:",
+  signUpLabel: "Alumni Sign-Up Form",
+  signUpUrl: MOUNTIE_BASKETBALL_URL,
+  closing:
+    "Thank you for continuing to represent P-O with pride. Once a Mountie, always a Mountie.",
+};
+
+export const PO_BASKETBALL_SECTION = {
+  title: "P-O Basketball",
+  description:
+    "Follow program news, schedules, and Mountie basketball updates through our official P-O Basketball hub.",
+  url: MOUNTIE_BASKETBALL_URL,
+  cta: "Visit Mountie Basketball",
+};
+
 export const HOME_WELCOME = {
   badge: "‼Coming Soon to Clearfield County‼",
   headline: "Little Mounties Community Sports Complex",
