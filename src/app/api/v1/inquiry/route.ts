@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { connectDB } from "@/lib/db";
+import { sendInquiryFormEmail } from "@/lib/email-server";
 import { Inquiry } from "@/lib/models";
 import { jsonError, jsonOk } from "@/lib/api-helpers";
 
@@ -18,6 +19,22 @@ export async function POST(req: NextRequest) {
 
     await connectDB();
     const doc = await Inquiry.create({ type, name, email, organization, payload: payload || {} });
+
+    try {
+      await sendInquiryFormEmail({
+        type,
+        name,
+        email,
+        organization,
+        payload: payload || {},
+      });
+    } catch (emailError) {
+      console.error("Inquiry saved but email failed:", emailError);
+      return jsonError(
+        "Your submission was saved, but we could not send the notification email. Please call us directly or try again later.",
+        503,
+      );
+    }
 
     return jsonOk({
       _id: doc._id.toString(),
