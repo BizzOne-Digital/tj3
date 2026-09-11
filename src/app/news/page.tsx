@@ -39,7 +39,7 @@ export default async function NewsPage() {
                   <NewsImage
                     src={article.imageUrl}
                     alt={article.title}
-                    className="aspect-video shrink-0"
+                    className="aspect-[4/5] min-h-[220px] shrink-0 sm:min-h-[240px]"
                     priority={i < 3}
                   />
                   <div className="flex flex-1 flex-col p-6">
