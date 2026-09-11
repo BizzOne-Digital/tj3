@@ -80,8 +80,10 @@ async function seed() {
   const facilities = [
     { name: "High-Tech Baseball Training", slug: "baseball-training", description: "Advanced indoor baseball development.", imageUrl: CONCEPT_IMAGES.baseball, order: 1 },
     { name: "High-Tech Softball Training", slug: "softball-training", description: "Technology-driven softball instruction.", imageUrl: CONCEPT_IMAGES.training, order: 2 },
-    { name: "Multi-Sport Courts", slug: "multi-sport-courts", description: "Flexible courts for basketball and more.", imageUrl: CONCEPT_IMAGES.basketball, order: 3 },
-    { name: "Two-Story Play Zone", slug: "play-zone", description: "Massive family play space for year-round fun.", imageUrl: CONCEPT_IMAGES.family, order: 4 },
+    { name: "Basketball Training", slug: "basketball-training", description: "Indoor basketball skill development and training.", imageUrl: CONCEPT_IMAGES.basketball, order: 3 },
+    { name: "Tennis Training", slug: "tennis-training", description: "Court-based tennis instruction and programming.", imageUrl: CONCEPT_IMAGES.community, order: 4 },
+    { name: "Multi-Sport Courts", slug: "multi-sport-courts", description: "Flexible courts for basketball, volleyball, and more.", imageUrl: CONCEPT_IMAGES.basketball, order: 5 },
+    { name: "Play Zone", slug: "play-zone", description: "Massive family play space for year-round fun.", imageUrl: CONCEPT_IMAGES.family, order: 6 },
   ];
   await Facility.insertMany(facilities);
 

@@ -67,6 +67,16 @@ export const LEAGUE_SPORTS = [
   "Pickleball",
 ];
 
+/** Facility Interest / booking form dropdown */
+export const BOOKING_FACILITY_OPTIONS = [
+  "High-Tech Baseball Training",
+  "High-Tech Softball Training",
+  "Basketball Training",
+  "Tennis Training",
+  "Multi-Sport Courts",
+  "Play Zone",
+] as const;
+
 export const OFFERINGS = {
   intro:
     "Keep scrolling to learn more about what we are going to offer and reach out if you have something you'd like to see included.",

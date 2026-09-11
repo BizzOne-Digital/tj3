@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
 import { BookingForm } from "@/features/booking/BookingForm";
-import { api } from "@/lib/api";
+import { BOOKING_FACILITY_OPTIONS } from "@/lib/home-content";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -11,21 +11,7 @@ export const metadata = buildMetadata({
   path: "/booking",
 });
 
-export default async function BookingPage() {
-  let facilityNames: string[] = [
-    "High-Tech Baseball Training",
-    "High-Tech Softball Training",
-    "Multi-Sport Courts",
-    "Two-Story Play Zone",
-  ];
-  try {
-    const res = await api.getFacilities();
-    const published = res.data.filter((f) => f.published);
-    if (published.length > 0) facilityNames = published.map((f) => f.name);
-  } catch {
-    /* use defaults */
-  }
-
+export default function BookingPage() {
   return (
     <>
       <PageHero
@@ -42,7 +28,7 @@ export default async function BookingPage() {
             </Link>{" "}
             form for detailed league information.
           </p>
-          <BookingForm facilities={facilityNames} />
+          <BookingForm facilities={[...BOOKING_FACILITY_OPTIONS]} />
         </Container>
       </section>
     </>
