@@ -127,6 +127,7 @@ async function seed() {
       slug: "tj-anderson",
       role: "Project Lead & Community Contact",
       bio: "Leading the development of Little Mounties Community Sports Complex for Clearfield County. Contact for partnerships, sponsorship, league interest, or general questions.",
+      photoUrl: "/images/tj-anderson.png",
       order: 1,
     },
   ]);

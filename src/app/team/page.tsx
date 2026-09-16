@@ -23,15 +23,19 @@ export default async function TeamPage() {
     /* empty */
   }
 
+  const staticPhotoByName = new Map(
+    STATIC_TEAM.filter((m) => m.photoUrl).map((m) => [m.name.toLowerCase(), m.photoUrl!]),
+  );
+
   const displayMembers =
     members.length > 0
       ? members.map((m) => ({
           name: m.name,
           role: m.role,
           bio: m.bio,
-          photoUrl: m.photoUrl,
+          photoUrl: m.photoUrl ?? staticPhotoByName.get(m.name.toLowerCase()),
         }))
-      : STATIC_TEAM.map((m) => ({ ...m, photoUrl: undefined as string | undefined }));
+      : STATIC_TEAM.map((m) => ({ ...m }));
 
   return (
     <>
@@ -43,8 +47,8 @@ export default async function TeamPage() {
               <ScrollReveal key={member.name} delay={i * 0.05}>
                 <article className="glass-panel rounded-2xl p-8 text-center">
                   {member.photoUrl ? (
-                    <div className="relative mx-auto h-24 w-24 overflow-hidden rounded-full bg-graphite">
-                      <CmsImage src={member.photoUrl} alt={member.name} fill />
+                    <div className="relative mx-auto h-28 w-28 overflow-hidden rounded-full bg-graphite ring-2 ring-ice/20">
+                      <CmsImage src={member.photoUrl} alt={member.name} fill className="object-top" />
                     </div>
                   ) : (
                     <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-ice/10 font-display text-3xl text-ice">

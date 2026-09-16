@@ -365,6 +365,7 @@ export const STATIC_TEAM = [
     name: "Tj Anderson",
     role: "Project Lead & Community Contact",
     bio: "Leading the development of Little Mounties Community Sports Complex—a next-generation indoor sports and family entertainment destination for Clearfield County. Reach out for partnerships, sponsorship, league interest, or general questions.",
+    photoUrl: "/images/tj-anderson.png",
   },
 ];
 
