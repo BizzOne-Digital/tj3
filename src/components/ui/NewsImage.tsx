@@ -6,12 +6,14 @@ export function NewsImage({
   alt,
   className,
   priority,
+  objectFit = "cover",
   objectPosition = "top",
 }: {
   src?: string;
   alt: string;
   className?: string;
   priority?: boolean;
+  objectFit?: "cover" | "contain";
   objectPosition?: "center" | "top" | "bottom";
 }) {
   const imageSrc = src || "/hero-bg.jpg";
@@ -23,13 +25,21 @@ export function NewsImage({
         alt={alt}
         fill
         className={cn(
-          "object-cover",
-          objectPosition === "top" && "object-top",
-          objectPosition === "bottom" && "object-bottom",
+          objectFit === "contain" ? "object-contain p-2 sm:p-3" : "object-cover",
+          objectFit === "cover" && objectPosition === "top" && "object-top",
+          objectFit === "cover" && objectPosition === "bottom" && "object-bottom",
         )}
         priority={priority}
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
     </div>
+  );
+}
+
+/** Wide campaign flyers — show full graphic without cropping sides */
+export function isNewsFlyerImage(article: { slug?: string; imageUrl?: string }) {
+  return (
+    article.slug === "capital-campaign-underway" ||
+    article.imageUrl === "/images/welcome.jpg"
   );
 }

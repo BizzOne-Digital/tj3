@@ -1,7 +1,7 @@
 import { ScrollReveal } from "@/components/animation/ScrollReveal";
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
-import { NewsImage } from "@/components/ui/NewsImage";
+import { NewsImage, isNewsFlyerImage } from "@/components/ui/NewsImage";
 import { api } from "@/lib/api";
 import { getStaticNewsArticles } from "@/lib/static-news";
 import { buildMetadata } from "@/lib/seo";
@@ -30,7 +30,9 @@ export default async function NewsPage() {
       <section className="py-24">
         <Container>
           <div className="grid min-w-0 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {articles.map((article, i) => (
+            {articles.map((article, i) => {
+              const flyer = isNewsFlyerImage(article);
+              return (
               <ScrollReveal key={article._id} delay={i * 0.05} className="h-full">
                 <Link
                   href={`/news/${article.slug}`}
@@ -39,7 +41,12 @@ export default async function NewsPage() {
                   <NewsImage
                     src={article.imageUrl}
                     alt={article.title}
-                    className="aspect-[4/5] min-h-[220px] shrink-0 sm:min-h-[240px]"
+                    objectFit={flyer ? "contain" : "cover"}
+                    className={
+                      flyer
+                        ? "aspect-[3/4] min-h-[260px] shrink-0 sm:min-h-[280px]"
+                        : "aspect-[4/5] min-h-[220px] shrink-0 sm:min-h-[240px]"
+                    }
                     priority={i < 3}
                   />
                   <div className="flex flex-1 flex-col p-6">
@@ -56,7 +63,8 @@ export default async function NewsPage() {
                   </div>
                 </Link>
               </ScrollReveal>
-            ))}
+              );
+            })}
           </div>
         </Container>
       </section>
