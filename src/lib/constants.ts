@@ -46,6 +46,5 @@ export const MOBILE_EXTRA_LINKS = [
   { href: "/booking", label: "Booking" },
   { href: "/shop", label: "Shop" },
   { href: "/team", label: "Team" },
-  { href: "/booster-schedule", label: "Booster Schedule" },
   { href: "/faq", label: "FAQ" },
 ];

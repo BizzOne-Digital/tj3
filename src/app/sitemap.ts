@@ -11,7 +11,6 @@ const staticRoutes = [
   "/news",
   "/booking",
   "/team",
-  "/booster-schedule",
   "/faq",
   "/shop",
   "/privacy",
