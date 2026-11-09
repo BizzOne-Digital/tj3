@@ -57,8 +57,12 @@ export default function AdminSettingsPage() {
         />
         <Input label="Contact Email" value={form.contactEmail ?? ""} onChange={(e) => set("contactEmail", e.target.value)} />
         <Input label="Contact Phone" value={form.contactPhone ?? ""} onChange={(e) => set("contactPhone", e.target.value)} />
+        <Input label="Contact Person" value={form.contactPerson ?? ""} onChange={(e) => set("contactPerson", e.target.value)} />
         <Textarea label="Address" value={form.address ?? ""} onChange={(e) => set("address", e.target.value)} />
         <Input label="Zeffy Donation URL" value={form.zeffyDonationUrl ?? ""} onChange={(e) => set("zeffyDonationUrl", e.target.value)} />
+        <Input label="Facebook URL" value={form.facebookUrl ?? ""} onChange={(e) => set("facebookUrl", e.target.value)} />
+        <Input label="Hours / Opening Status" value={form.hoursStatus ?? ""} onChange={(e) => set("hoursStatus", e.target.value)} />
+        <Textarea label="Footer Statement" value={form.footerStatement ?? ""} onChange={(e) => set("footerStatement", e.target.value)} />
 
         <hr className="border-border" />
         <h2 className="font-display text-xl text-white">Announcement Bar</h2>
@@ -77,6 +81,21 @@ export default function AdminSettingsPage() {
           value={form.announcement?.message ?? ""}
           onChange={(e) =>
             set("announcement", { ...form.announcement, enabled: form.announcement?.enabled ?? false, message: e.target.value })
+          }
+        />
+
+        <Input
+          label="Announcement Link (e.g. /about)"
+          value={form.announcement?.link ?? ""}
+          onChange={(e) =>
+            set("announcement", { ...form.announcement, enabled: form.announcement?.enabled ?? false, message: form.announcement?.message ?? "", link: e.target.value })
+          }
+        />
+        <Input
+          label="Announcement Link Label"
+          value={form.announcement?.linkLabel ?? ""}
+          onChange={(e) =>
+            set("announcement", { ...form.announcement, enabled: form.announcement?.enabled ?? false, message: form.announcement?.message ?? "", linkLabel: e.target.value })
           }
         />
 

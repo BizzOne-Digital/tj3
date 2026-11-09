@@ -75,7 +75,7 @@ export function Footer({
           <div className="lg:col-span-2">
             <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.25em] text-ice">Explore</p>
             <ul className="space-y-2.5">
-              {NAV_LINKS.map((link) => (
+              {[...NAV_LINKS, { href: "/gallery", label: "Gallery" }].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-cool-grey transition-colors hover:text-white">
                     {link.label}

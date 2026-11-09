@@ -8,10 +8,21 @@ import { connectDB } from "./db";
 const ACCESS_COOKIE = "lm_access_token";
 const REFRESH_COOKIE = "lm_refresh_token";
 
+/** Admin sessions last 12h: the portal has no silent token refresh, so a short TTL would log editors out mid-edit. */
+const ACCESS_TTL_SECONDS = 12 * 60 * 60;
+
 function getSecrets() {
+  const access = process.env.JWT_ACCESS_SECRET;
+  const refresh = process.env.JWT_REFRESH_SECRET;
+  if (process.env.NODE_ENV === "production") {
+    if (!access || !refresh || access.length < 32 || refresh.length < 32) {
+      throw new Error("JWT_ACCESS_SECRET and JWT_REFRESH_SECRET (32+ chars) must be set in production");
+    }
+    return { access, refresh };
+  }
   return {
-    access: process.env.JWT_ACCESS_SECRET || "dev-access-secret-min-32-characters-long",
-    refresh: process.env.JWT_REFRESH_SECRET || "dev-refresh-secret-min-32-characters-long",
+    access: access || "dev-access-secret-min-32-characters-long",
+    refresh: refresh || "dev-refresh-secret-min-32-characters-long",
   };
 }
 
@@ -25,7 +36,7 @@ export async function verifyPassword(password: string, hash: string) {
 
 export function signTokens(user: { id: string; role: string }) {
   const { access, refresh } = getSecrets();
-  const accessToken = jwt.sign({ sub: user.id, role: user.role }, access, { expiresIn: "15m" });
+  const accessToken = jwt.sign({ sub: user.id, role: user.role }, access, { expiresIn: ACCESS_TTL_SECONDS });
   const refreshToken = jwt.sign({ sub: user.id, role: user.role }, refresh, { expiresIn: "7d" });
   return { accessToken, refreshToken };
 }
@@ -36,7 +47,7 @@ export function setAuthCookies(res: NextResponse, accessToken: string, refreshTo
     httpOnly: true,
     secure,
     sameSite: "lax",
-    maxAge: 15 * 60,
+    maxAge: ACCESS_TTL_SECONDS,
     path: "/",
   });
   res.cookies.set(REFRESH_COOKIE, refreshToken, {
@@ -83,4 +94,38 @@ export async function loginUser(email: string, password: string) {
   const valid = await verifyPassword(password, user.passwordHash);
   if (!valid) throw new Error("Invalid credentials");
   return user;
+}
+
+/** Map a thrown error from requireAuth() to a response status. */
+export function authErrorStatus(e: unknown): 401 | 500 {
+  return e instanceof Error && e.message === "Unauthorized" ? 401 : 500;
+}
+
+/** Tiny in-memory throttle for login attempts (best effort on serverless: per warm instance). */
+const attempts = new Map<string, { count: number; resetAt: number }>();
+const MAX_ATTEMPTS = 8;
+const WINDOW_MS = 15 * 60 * 1000;
+
+export function isLoginThrottled(key: string): boolean {
+  const entry = attempts.get(key);
+  if (!entry) return false;
+  if (entry.resetAt < Date.now()) {
+    attempts.delete(key);
+    return false;
+  }
+  return entry.count >= MAX_ATTEMPTS;
+}
+
+export function recordLoginFailure(key: string) {
+  const now = Date.now();
+  const entry = attempts.get(key);
+  if (!entry || entry.resetAt < now) {
+    attempts.set(key, { count: 1, resetAt: now + WINDOW_MS });
+  } else {
+    entry.count += 1;
+  }
+}
+
+export function clearLoginFailures(key: string) {
+  attempts.delete(key);
 }

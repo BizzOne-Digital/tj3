@@ -10,6 +10,9 @@ export type CrudResource =
   | "shop"
   | "sponsors"
   | "pages"
+  | "schedule"
+  | "coaches"
+  | "gallery"
   | "bookings"
   | "contacts"
   | "inquiries";
@@ -195,4 +198,49 @@ export interface AdminUser {
   email: string;
   name: string;
   role: string;
+}
+
+export interface ScheduleItem {
+  _id: string;
+  title: string;
+  category?: string;
+  scheduleType: "weekly" | "event";
+  dayOfWeek?: string;
+  eventDate?: string;
+  startTime?: string;
+  endTime?: string;
+  coach?: string;
+  location?: string;
+  ageGroup?: string;
+  price?: string;
+  description?: string;
+  registrationUrl?: string;
+  imageUrl?: string;
+  published: boolean;
+  order: number;
+}
+
+export interface Coach {
+  _id: string;
+  name: string;
+  slug: string;
+  title?: string;
+  sport?: string;
+  bio?: string;
+  photoUrl?: string;
+  credentials?: string[];
+  email?: string;
+  phone?: string;
+  published: boolean;
+  order: number;
+}
+
+export interface GalleryImage {
+  _id: string;
+  title?: string;
+  caption?: string;
+  imageUrl: string;
+  category?: string;
+  published: boolean;
+  order: number;
 }

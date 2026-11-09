@@ -97,3 +97,35 @@ export function resolveImageUrl(url?: string | null): string {
 export function resolveSiteLogoUrl(logoUrl?: string | null): string {
   return resolveImageUrl(resolveSiteLogo(logoUrl));
 }
+
+/** Deep-walk any value and collect every `/api/uploads/<folder>/<file>` string in it (exact string matches only). */
+export function collectStoredUploadUrls(value: unknown, out: Set<string> = new Set()): Set<string> {
+  if (typeof value === "string") {
+    if (parseStoredUploadUrl(value)) out.add(value);
+  } else if (Array.isArray(value)) {
+    for (const item of value) collectStoredUploadUrls(item, out);
+  } else if (value && typeof value === "object") {
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      if (k === "_id" || k === "createdAt" || k === "updatedAt") continue;
+      collectStoredUploadUrls(v, out);
+    }
+  }
+  return out;
+}
+
+/**
+ * Identify an image by its magic bytes. The client-supplied Content-Type is attacker
+ * controlled, so uploads are only accepted when the bytes really are JPEG/PNG/GIF/WebP.
+ */
+export function sniffImageMime(bytes: Uint8Array): AllowedMimeType | null {
+  const startsWith = (sig: number[], offset = 0) => sig.every((b, i) => bytes[offset + i] === b);
+  if (bytes.length >= 3 && startsWith([0xff, 0xd8, 0xff])) return "image/jpeg";
+  if (bytes.length >= 8 && startsWith([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])) return "image/png";
+  if (bytes.length >= 6 && (startsWith([0x47, 0x49, 0x46, 0x38, 0x37, 0x61]) || startsWith([0x47, 0x49, 0x46, 0x38, 0x39, 0x61]))) {
+    return "image/gif";
+  }
+  if (bytes.length >= 12 && startsWith([0x52, 0x49, 0x46, 0x46]) && startsWith([0x57, 0x45, 0x42, 0x50], 8)) {
+    return "image/webp";
+  }
+  return null;
+}

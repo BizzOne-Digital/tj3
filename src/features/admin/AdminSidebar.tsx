@@ -4,6 +4,10 @@ import { cn } from "@/lib/utils";
 import type { CrudResource } from "@/types/cms";
 import {
   BarChart3,
+  CalendarClock,
+  Dumbbell,
+  Images,
+  SquarePen,
   Building2,
   Calendar,
   DollarSign,
@@ -24,6 +28,10 @@ import { usePathname } from "next/navigation";
 
 const links: { href: string; label: string; icon: React.ElementType; resource?: CrudResource }[] = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/content", label: "Site Content", icon: SquarePen },
+  { href: "/admin/schedule", label: "Schedule", icon: CalendarClock, resource: "schedule" },
+  { href: "/admin/coaches", label: "Coaches", icon: Dumbbell, resource: "coaches" },
+  { href: "/admin/gallery", label: "Gallery", icon: Images, resource: "gallery" },
   { href: "/admin/settings", label: "Settings", icon: Settings, resource: "settings" },
   { href: "/admin/stats", label: "Stats", icon: BarChart3, resource: "stats" },
   { href: "/admin/facilities", label: "Facilities", icon: Building2, resource: "facilities" },
@@ -34,7 +42,7 @@ const links: { href: string; label: string; icon: React.ElementType; resource?: 
   { href: "/admin/news", label: "News", icon: Newspaper, resource: "news" },
   { href: "/admin/shop", label: "Shop", icon: ShoppingBag, resource: "shop" },
   { href: "/admin/sponsors", label: "Sponsors", icon: Star, resource: "sponsors" },
-  { href: "/admin/pages", label: "Pages", icon: FileText, resource: "pages" },
+  { href: "/admin/pages", label: "Pages (HTML)", icon: FileText, resource: "pages" },
   { href: "/admin/bookings", label: "Bookings", icon: Calendar, resource: "bookings" },
   { href: "/admin/contacts", label: "Contacts", icon: Mail, resource: "contacts" },
   { href: "/admin/inquiries", label: "Inquiries", icon: Mail, resource: "inquiries" },

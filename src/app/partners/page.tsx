@@ -1,7 +1,7 @@
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
 import { PartnerForm } from "@/features/forms/PartnerForm";
-import { PARTNER_CONTENT } from "@/lib/home-content";
+import { getContent } from "@/lib/site-content-server";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -10,7 +10,8 @@ export const metadata = buildMetadata({
   path: "/partners",
 });
 
-export default function PartnersPage() {
+export default async function PartnersPage() {
+  const PARTNER_CONTENT = await getContent("page.partners");
   return (
     <>
       <PageHero title={PARTNER_CONTENT.headline} subtitle={PARTNER_CONTENT.intro} />

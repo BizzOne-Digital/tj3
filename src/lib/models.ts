@@ -130,6 +130,58 @@ const PageSchema = new Schema(
   },
   baseOpts,
 );
+const SiteContentSchema = new Schema(
+  {
+    key: { type: String, required: true, unique: true },
+    value: { type: Schema.Types.Mixed, default: {} },
+  },
+  baseOpts,
+);
+const ScheduleSchema = new Schema(
+  {
+    title: { type: String, required: true },
+    category: String,
+    scheduleType: { type: String, enum: ["weekly", "event"], default: "weekly" },
+    dayOfWeek: String,
+    eventDate: String,
+    startTime: String,
+    endTime: String,
+    coach: String,
+    location: String,
+    ageGroup: String,
+    price: String,
+    description: String,
+    registrationUrl: String,
+    imageUrl: String,
+    ...crudBase,
+  },
+  baseOpts,
+);
+const CoachSchema = new Schema(
+  {
+    name: { type: String, required: true },
+    slug: { type: String, unique: true, required: true },
+    title: String,
+    sport: String,
+    bio: String,
+    photoUrl: String,
+    credentials: [String],
+    email: String,
+    phone: String,
+    ...crudBase,
+  },
+  baseOpts,
+);
+const GallerySchema = new Schema(
+  {
+    title: String,
+    caption: String,
+    imageUrl: { type: String, required: true },
+    category: String,
+    ...crudBase,
+  },
+  baseOpts,
+);
 const StoredUploadSchema = new Schema(
   {
     folder: { type: String, required: true, index: true },
@@ -177,6 +229,10 @@ export const News = getModel("News", NewsSchema);
 export const ShopProduct = getModel("ShopProduct", ShopSchema);
 export const Sponsor = getModel("Sponsor", SponsorSchema);
 export const PageContent = getModel("PageContent", PageSchema);
+export const SiteContent = getModel("SiteContent", SiteContentSchema);
+export const Schedule = getModel("Schedule", ScheduleSchema);
+export const Coach = getModel("Coach", CoachSchema);
+export const GalleryItem = getModel("GalleryItem", GallerySchema);
 export const StoredUpload = getModel("StoredUpload", StoredUploadSchema);
 export const Booking = getModel("Booking", BookingSchema);
 export const Contact = getModel("Contact", ContactSchema);
@@ -193,6 +249,9 @@ export const RESOURCE_MAP = {
   shop: ShopProduct,
   sponsors: Sponsor,
   pages: PageContent,
+  schedule: Schedule,
+  coaches: Coach,
+  gallery: GalleryItem,
   bookings: Booking,
   contacts: Contact,
   inquiries: Inquiry,

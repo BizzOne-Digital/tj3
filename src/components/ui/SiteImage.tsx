@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { useContent } from "@/components/providers/ContentProvider";
 import { IMAGE_FALLBACKS, SITE_IMAGES } from "@/lib/home-content";
+import { isStoredUploadUrl, resolveImageUrl } from "@/lib/upload-helpers";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -34,8 +36,10 @@ export function SiteImage({
   showConceptLabel?: boolean;
   objectFit?: "cover" | "contain";
 }) {
-  const [src, setSrc] = useState(SITE_IMAGES[imageKey]);
+  const images = useContent("images") as Record<string, string>;
+  const [failed, setFailed] = useState(false);
   const fallback = IMAGE_FALLBACKS[imageKey];
+  const src = failed ? fallback : resolveImageUrl(images[imageKey] || SITE_IMAGES[imageKey]);
   const useFill = useFillLayout(className, fill);
 
   if (imageKey === "campaignProspectus") {
@@ -59,7 +63,8 @@ export function SiteImage({
         height={useFill ? undefined : 560}
         className={objectFit === "contain" ? "object-contain bg-white p-2" : "object-cover"}
         priority={priority}
-        onError={() => setSrc(fallback)}
+        unoptimized={isStoredUploadUrl(src)}
+        onError={() => setFailed(true)}
         sizes="(max-width: 768px) 100vw, 50vw"
       />
       {showConceptLabel && (
@@ -87,9 +92,10 @@ export function SiteGalleryImage({
   return (
     <div className={cn("relative w-full max-w-full overflow-hidden rounded-2xl bg-[#0a1428]", className)}>
       <Image
-        src={src}
+        src={resolveImageUrl(src)}
         alt={alt}
         fill
+        unoptimized={isStoredUploadUrl(src)}
         className={cn(
           objectFit === "contain" ? "object-contain p-2 sm:p-3" : "object-cover",
           objectPosition === "top" && objectFit === "cover" && "object-top",

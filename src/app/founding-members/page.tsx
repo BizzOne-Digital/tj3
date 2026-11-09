@@ -1,7 +1,7 @@
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
 import { FoundingMemberForm } from "@/features/forms/FoundingMemberForm";
-import { FOUNDING_MEMBERS_INTRO } from "@/lib/home-content";
+import { getContent } from "@/lib/site-content-server";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -10,10 +10,11 @@ export const metadata = buildMetadata({
   path: "/founding-members",
 });
 
-export default function FoundingMembersPage() {
+export default async function FoundingMembersPage() {
+  const FOUNDING_MEMBERS_INTRO = await getContent("page.founding");
   return (
     <>
-      <PageHero title="Future Members" subtitle={FOUNDING_MEMBERS_INTRO.early} />
+      <PageHero title={FOUNDING_MEMBERS_INTRO.title} subtitle={FOUNDING_MEMBERS_INTRO.early} />
       <section className="py-20">
         <Container className="max-w-3xl">
           <div className="mb-8 space-y-3 text-cool-grey">

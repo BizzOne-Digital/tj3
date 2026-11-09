@@ -2,6 +2,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { AboutPageContent } from "@/features/about/AboutPageContent";
 import { api } from "@/lib/api";
 import { ABOUT_CONTENT } from "@/lib/home-content";
+import { getContent } from "@/lib/site-content-server";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -13,13 +14,12 @@ export const metadata = buildMetadata({
 const DEFAULT_ABOUT_HTML = ABOUT_CONTENT.html.trim();
 
 export default async function AboutPage() {
-  let subtitle = ABOUT_CONTENT.subtitle;
+  const heroes = await getContent("pageHeroes");
   let heroImageUrl: string | undefined;
   let extraHtml: string | undefined;
 
   try {
     const page = await api.getPage("about");
-    subtitle = page.data.subtitle ?? subtitle;
     heroImageUrl = page.data.heroImageUrl;
 
     const cmsContent = page.data.content?.trim();
@@ -33,8 +33,8 @@ export default async function AboutPage() {
   return (
     <>
       <PageHero
-        title="About Little Mounties"
-        subtitle={subtitle}
+        title={heroes.about.title}
+        subtitle={heroes.about.subtitle}
         imageUrl={heroImageUrl}
       />
       <AboutPageContent extraHtml={extraHtml} />

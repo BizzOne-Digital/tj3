@@ -34,6 +34,8 @@ export const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/services", label: "Facility" },
+  { href: "/schedule", label: "Schedule" },
+  { href: "/coaches", label: "Coaches" },
   { href: "/pricing", label: "Sponsorship" },
   { href: "/news", label: "News" },
   { href: "/contact", label: "Contact" },
@@ -46,5 +48,6 @@ export const MOBILE_EXTRA_LINKS = [
   { href: "/booking", label: "Booking" },
   { href: "/shop", label: "Shop" },
   { href: "/team", label: "Team" },
+  { href: "/gallery", label: "Gallery" },
   { href: "/faq", label: "FAQ" },
 ];

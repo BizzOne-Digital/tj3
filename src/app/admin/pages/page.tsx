@@ -8,6 +8,7 @@ export default function AdminPagesPage() {
     <GenericCrudPage<PageContent>
       resource="pages"
       title="Pages"
+      itemLabel="Page"
       defaultValues={{ published: true }}
       columns={[
         { key: "slug", label: "Slug" },

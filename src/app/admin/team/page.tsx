@@ -8,6 +8,7 @@ export default function AdminTeamPage() {
     <GenericCrudPage<TeamMember>
       resource="team"
       title="Team Members"
+      itemLabel="Team Member"
       defaultValues={{ published: true, order: 0 }}
       columns={[
         { key: "name", label: "Name" },
@@ -16,7 +17,7 @@ export default function AdminTeamPage() {
       ]}
       fields={[
         { name: "name", label: "Name" },
-        { name: "slug", label: "Slug" },
+        { name: "slug", label: "Slug", help: "Leave blank to generate from the name." },
         { name: "role", label: "Role" },
         { name: "bio", label: "Bio", type: "textarea" },
         { name: "photoUrl", label: "Photo", type: "image", folder: "gallery" },

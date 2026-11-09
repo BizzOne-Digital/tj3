@@ -1,6 +1,8 @@
 "use client";
 
-import { BRAND, HERO_BG } from "@/lib/constants";
+import { BRAND } from "@/lib/constants";
+import { useContent } from "@/components/providers/ContentProvider";
+import { isStoredUploadUrl, resolveImageUrl } from "@/lib/upload-helpers";
 import { trackDonationClick, trackSupportClick } from "@/lib/analytics";
 import { Header, SupportButton } from "@/components/layout/Header";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
@@ -28,6 +30,8 @@ export function HomeHero({
   };
 }) {
   const reduced = usePrefersReducedMotion();
+  const hero = useContent("home.hero");
+  const heroBg = resolveImageUrl(hero.backgroundImage);
   const supportUrl = donationUrl || BRAND.donationUrl;
 
   return (
@@ -45,7 +49,8 @@ export function HomeHero({
 
       <div className="relative min-h-[calc(100vh-7rem)] lg:min-h-[92vh]">
         <Image
-          src={HERO_BG}
+          src={heroBg}
+          unoptimized={isStoredUploadUrl(heroBg)}
           alt="Little Mounties Community Sports Complex"
           fill
           priority
@@ -66,16 +71,16 @@ export function HomeHero({
             className="min-w-0 max-w-2xl lg:max-w-3xl"
           >
             <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-cool-grey sm:text-[11px] sm:tracking-[0.4em]">
-              The Future of Community Sports
+              {hero.kicker}
             </p>
 
             <h1 className="break-words font-display text-[clamp(2.25rem,7.5vw,4.5rem)] leading-[0.92] text-white">
-              BUILDING MORE THAN A GYM.
-              <span className="mt-1 block text-white">BUILDING A STRONGER COMMUNITY.</span>
+              {hero.headlineLine1}
+              <span className="mt-1 block text-white">{hero.headlineLine2}</span>
             </h1>
 
             <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/85 sm:text-base lg:text-lg">
-              {BRAND.heroDescription}
+              {hero.description}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3 sm:mt-10 sm:gap-4">
@@ -83,7 +88,7 @@ export function HomeHero({
                 href="/about"
                 className="group inline-flex items-center gap-2 rounded-sm border border-white/40 bg-black/25 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-sm transition-colors hover:border-white hover:bg-white/10 sm:px-6 sm:py-3.5 sm:text-[11px]"
               >
-                Explore the Vision
+                {hero.exploreButtonLabel}
                 <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
 
@@ -99,7 +104,7 @@ export function HomeHero({
 
             <div className="mt-7 flex min-w-0 flex-wrap items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/75 sm:text-[11px] sm:tracking-[0.25em]">
               <MapPin className="h-4 w-4 shrink-0 text-ice" />
-              <span className="break-words">Philipsburg • Clearfield County, PA</span>
+              <span className="break-words">{hero.location}</span>
             </div>
           </motion.div>
 

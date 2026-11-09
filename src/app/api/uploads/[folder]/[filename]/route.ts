@@ -27,8 +27,10 @@ export async function GET(
     status: 200,
     headers: {
       "Content-Type": doc.mimeType,
-      "Content-Length": String(doc.size),
+      "Content-Length": String(doc.data.length),
       "Cache-Control": "public, max-age=31536000, immutable",
+      "X-Content-Type-Options": "nosniff",
+      "Content-Disposition": "inline",
     },
   });
 }

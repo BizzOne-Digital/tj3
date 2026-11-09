@@ -8,6 +8,7 @@ export default function AdminNewsPage() {
     <GenericCrudPage<NewsArticle>
       resource="news"
       title="News Articles"
+      itemLabel="Article"
       defaultValues={{ published: true, featured: false }}
       columns={[
         { key: "title", label: "Title" },
@@ -25,7 +26,7 @@ export default function AdminNewsPage() {
         { name: "content", label: "Content (HTML)", type: "textarea" },
         { name: "imageUrl", label: "Featured Image", type: "image", folder: "gallery" },
         { name: "author", label: "Author" },
-        { name: "publishedAt", label: "Published Date (ISO)" },
+        { name: "publishedAt", label: "Published date", type: "date" },
         { name: "featured", label: "Featured", type: "checkbox" },
         { name: "published", label: "Published", type: "checkbox" },
       ]}

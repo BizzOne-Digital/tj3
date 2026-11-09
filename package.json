@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "seed": "tsx --env-file=.env.local scripts/seed.ts",
+    "set-admin": "tsx --env-file=.env.local scripts/set-admin.ts",
     "sync:images": "tsx scripts/sync-drive-images.ts",
     "test:smtp": "tsx --env-file=.env.local scripts/test-smtp.ts",
     "test": "vitest run",

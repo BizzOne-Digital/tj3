@@ -4,7 +4,6 @@ import { Container } from "@/components/ui/Container";
 import { SectionBlock, ZeffyPayButton } from "@/components/ui/ContentBlocks";
 import { api } from "@/lib/api";
 import {
-  CAMPAIGN_HEADLINE,
   EXCLUSIVITY_RULES,
   MEDIA_PERKS,
   PRICING_CATEGORY_LABELS,
@@ -12,6 +11,7 @@ import {
   STATIC_PRICING_TIERS,
   ZEFFY_URL,
 } from "@/lib/home-content";
+import { getContent } from "@/lib/site-content-server";
 import { buildMetadata } from "@/lib/seo";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -46,6 +46,7 @@ type DisplayTier = {
 };
 
 export default async function PricingPage() {
+  const heroes = await getContent("pageHeroes");
   let tiers: DisplayTier[] = [];
   try {
     const res = await api.getPricing();
@@ -82,7 +83,7 @@ export default async function PricingPage() {
 
   return (
     <>
-      <PageHero title="Founding Partners" subtitle={CAMPAIGN_HEADLINE} />
+      <PageHero title={heroes.pricing.title} subtitle={heroes.pricing.subtitle} />
 
       <section className="overflow-x-clip py-20">
         <Container>

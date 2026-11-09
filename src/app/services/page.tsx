@@ -4,7 +4,8 @@ import { Container } from "@/components/ui/Container";
 import { CmsImage } from "@/components/ui/CmsImage";
 import { SiteImage } from "@/components/ui/SiteImage";
 import { api } from "@/lib/api";
-import { OFFERINGS, STATIC_SERVICES } from "@/lib/home-content";
+import { STATIC_SERVICES } from "@/lib/home-content";
+import { getContent } from "@/lib/site-content-server";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -14,6 +15,8 @@ export const metadata = buildMetadata({
 });
 
 export default async function ServicesPage() {
+  const heroes = await getContent("pageHeroes");
+  const offerings = await getContent("home.offerings");
   let services: Awaited<ReturnType<typeof api.getServices>>["data"] = [];
   try {
     const res = await api.getServices();
@@ -34,13 +37,10 @@ export default async function ServicesPage() {
 
   return (
     <>
-      <PageHero
-        title="Facility & Services"
-        subtitle="What Little Mounties Community Sports Complex is offering."
-      />
+      <PageHero title={heroes.services.title} subtitle={heroes.services.subtitle} />
       <section className="py-24">
         <Container>
-          <p className="mx-auto mb-12 max-w-3xl text-center text-cool-grey">{OFFERINGS.intro}</p>
+          <p className="mx-auto mb-12 max-w-3xl text-center text-cool-grey">{offerings.intro}</p>
           <div className="grid min-w-0 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {items.map((service, i) => (
               <ScrollReveal key={service.name} delay={i * 0.05} className="h-full">

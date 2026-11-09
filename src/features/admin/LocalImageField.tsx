@@ -1,11 +1,10 @@
 "use client";
 
-import { deleteUploadedImage, uploadImageFile } from "@/lib/upload-client";
+import { uploadImageFile } from "@/lib/upload-client";
 import type { UploadFolder } from "@/lib/upload-helpers";
-import { isStoredUploadUrl, resolveImageUrl } from "@/lib/upload-helpers";
+import { MAX_UPLOAD_BYTES, resolveImageUrl, validateUploadFile } from "@/lib/upload-helpers";
 import { cn } from "@/lib/utils";
 import { ImagePlus, Loader2, Trash2 } from "lucide-react";
-import Image from "next/image";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -32,15 +31,25 @@ export function LocalImageField({
   const handleFile = async (file: File | undefined) => {
     if (!file) return;
 
+    // Fail fast on the client; the server re-validates everything.
+    // Oversized photos are shrunk in the browser before upload, so only cap absurd sizes here.
+    const invalid =
+      file.size > 40 * 1024 * 1024
+        ? "Image is too large (max 40MB)."
+        : validateUploadFile(file, file.type, Math.min(file.size, MAX_UPLOAD_BYTES));
+    if (invalid) {
+      toast.error(invalid);
+      if (inputRef.current) inputRef.current.value = "";
+      return;
+    }
+
     setUploading(true);
     try {
-      if (value && isStoredUploadUrl(value)) {
-        await deleteUploadedImage(value);
-      }
-
+      // The previous image (if it was an /api/uploads file) is deleted by the server
+      // when the record is saved, so cancelling an edit never leaves a broken image.
       const result = await uploadImageFile(file, folder);
       onChange(result.url);
-      toast.success("Image uploaded");
+      toast.success("Image uploaded. Save to apply.");
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Upload failed");
     } finally {
@@ -49,21 +58,10 @@ export function LocalImageField({
     }
   };
 
-  const handleRemove = async () => {
+  const handleRemove = () => {
     if (!value) return;
-
-    setUploading(true);
-    try {
-      if (isStoredUploadUrl(value)) {
-        await deleteUploadedImage(value);
-      }
-      onChange("");
-      toast.success("Image removed");
-    } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Remove failed");
-    } finally {
-      setUploading(false);
-    }
+    onChange("");
+    toast.success("Image removed. Save to apply.");
   };
 
   return (
@@ -73,14 +71,9 @@ export function LocalImageField({
       {value ? (
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
           <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-xl border border-border bg-graphite">
-            <Image
-              src={previewSrc}
-              alt={label}
-              fill
-              className="object-cover"
-              sizes="112px"
-              unoptimized={previewSrc.startsWith("/api/uploads/")}
-            />
+            {/* Plain <img>: admins can paste any URL and next/image would reject unknown hosts. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={previewSrc} alt={label} className="h-full w-full object-cover" />
           </div>
           <div className="flex min-w-0 flex-1 flex-col gap-2">
             <p className="break-all text-xs text-cool-grey">{value}</p>

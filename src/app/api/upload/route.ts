@@ -7,6 +7,7 @@ import {
   extensionForMime,
   isAllowedFolder,
   parseStoredUploadUrl,
+  sniffImageMime,
   validateUploadFile,
 } from "@/lib/upload-helpers";
 import { deleteStoredUploadByUrl } from "@/lib/upload-server";
@@ -42,20 +43,27 @@ export async function POST(req: NextRequest) {
       return jsonError(validationError, 400);
     }
 
-    const ext = extensionForMime(mimeType);
+    const buffer = Buffer.from(await file.arrayBuffer());
+
+    // Never trust the browser-declared type: the bytes must really be the image they claim to be.
+    const sniffed = sniffImageMime(buffer);
+    if (!sniffed || sniffed !== mimeType) {
+      return jsonError("File content does not match an allowed image type (JPEG, PNG, WebP, GIF).", 400);
+    }
+
+    const ext = extensionForMime(sniffed);
     if (!ext) {
       return jsonError("Invalid file type", 400);
     }
 
     const filename = `${Date.now()}-${randomBytes(8).toString("hex")}.${ext}`;
-    const buffer = Buffer.from(await file.arrayBuffer());
-
+    const actualSize = buffer.length;
     await connectDB();
     await StoredUpload.create({
       folder,
       filename,
-      mimeType,
-      size,
+      mimeType: sniffed,
+      size: actualSize,
       data: buffer,
     });
 
@@ -63,7 +71,7 @@ export async function POST(req: NextRequest) {
       success: true,
       url: `/api/uploads/${folder}/${filename}`,
       filename,
-      size,
+      size: actualSize,
       folder,
     });
   } catch (e) {

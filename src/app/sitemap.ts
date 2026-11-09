@@ -11,6 +11,9 @@ const staticRoutes = [
   "/news",
   "/booking",
   "/team",
+  "/schedule",
+  "/coaches",
+  "/gallery",
   "/faq",
   "/shop",
   "/privacy",
@@ -27,13 +30,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   try {
-    const [news, shop] = await Promise.all([api.getNews(), api.getShopProducts()]);
+    const [news, shop] = await Promise.all([api.getNews(), api.getShop()]);
     news.data
       .filter((a) => a.published)
       .forEach((a) => {
         entries.push({
           url: `${base}/news/${a.slug}`,
-          lastModified: new Date(a.publishedAt),
+          lastModified: a.publishedAt ? new Date(a.publishedAt) : new Date(),
           changeFrequency: "monthly",
           priority: 0.6,
         });

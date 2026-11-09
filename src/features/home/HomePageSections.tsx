@@ -1,47 +1,32 @@
 "use client";
 
 import { ScrollReveal } from "@/components/animation/ScrollReveal";
+import { useContent } from "@/components/providers/ContentProvider";
 import { SectionBlock, ZeffyPayButton } from "@/components/ui/ContentBlocks";
 import { SiteImage, SiteGalleryImage } from "@/components/ui/SiteImage";
 import { Button } from "@/components/ui/Button";
-import {
-  ECONOMIC_IMPACT,
-  FACEBOOK_URL,
-  HOME_WELCOME,
-  LEAGUE_SPORTS,
-  MEMBERSHIPS,
-  FOUNDING_MEMBERS_INTRO,
-  OFFERINGS,
-  REAL_ESTATE,
-  INVESTMENT,
-  OFFERING_GALLERY,
-  ZEFFY_URL,
-  LEAGUE_INTRO,
-  CAMPAIGN_HEADLINE,
-  STAY_CONNECTED_BULLETS,
-  STAY_CONNECTED_FOOTER,
-  PARTNER_CONTENT,
-} from "@/lib/home-content";
+import { FACEBOOK_URL, ZEFFY_URL } from "@/lib/home-content";
 import Link from "next/link";
 import { Check, ExternalLink } from "lucide-react";
 
 export function WelcomeSection() {
+  const welcome = useContent("home.welcome");
   return (
-    <SectionBlock id="welcome" eyebrow={HOME_WELCOME.badge} title={HOME_WELCOME.headline}>
+    <SectionBlock id="welcome" eyebrow={welcome.badge} title={welcome.headline}>
       <div className="grid min-w-0 gap-10 lg:grid-cols-2 lg:items-start">
         <div className="min-w-0 space-y-5 text-base leading-relaxed">
-          <p className="text-lg text-ice">{HOME_WELCOME.subheadline}</p>
-          {HOME_WELCOME.paragraphs.map((p) => (
-            <p key={p.slice(0, 30)}>{p}</p>
+          <p className="text-lg text-ice">{welcome.subheadline}</p>
+          {welcome.paragraphs.map((p, i) => (
+            <p key={`${i}-${p.slice(0, 30)}`}>{p}</p>
           ))}
-          <p className="font-display text-2xl text-white">{HOME_WELCOME.legacyLine}</p>
-          <p>{HOME_WELCOME.mission}</p>
+          <p className="font-display text-2xl text-white">{welcome.legacyLine}</p>
+          <p>{welcome.mission}</p>
           <div>
-            <h3 className="mb-3 font-display text-xl text-white">{HOME_WELCOME.visionTitle}</h3>
-            <p className="mb-3">{HOME_WELCOME.visionIntro}</p>
+            <h3 className="mb-3 font-display text-xl text-white">{welcome.visionTitle}</h3>
+            <p className="mb-3">{welcome.visionIntro}</p>
             <ul className="space-y-2">
-              {HOME_WELCOME.visionItems.map((item) => (
-                <li key={item} className="flex gap-2">
+              {welcome.visionItems.map((item, i) => (
+                <li key={`${i}-${item}`} className="flex gap-2">
                   <Check className="mt-1 h-4 w-4 shrink-0 text-ice" />
                   <span>{item}</span>
                 </li>
@@ -63,30 +48,31 @@ export function WelcomeSection() {
 }
 
 export function LeagueCTASection() {
+  const leagues = useContent("home.leagues");
   return (
     <section id="leagues" className="overflow-x-clip border-t border-border py-16 gradient-bg sm:py-20">
       <div className="mx-auto min-w-0 max-w-7xl px-4 sm:px-6">
         <ScrollReveal>
           <p className="break-words text-xs font-semibold uppercase tracking-[0.2em] text-ice sm:tracking-[0.35em]">
-            Leagues & Teams
+            {leagues.eyebrow}
           </p>
-          <p className="mt-3 break-words text-cool-grey">{LEAGUE_INTRO.question}</p>
+          <p className="mt-3 break-words text-cool-grey">{leagues.question}</p>
           <h2 className="mt-2 break-words font-display text-[clamp(1.75rem,7vw,3rem)] leading-tight text-white sm:text-5xl">
-            {LEAGUE_INTRO.headline}
+            {leagues.headline}
           </h2>
-          <p className="mt-4 max-w-3xl text-cool-grey">{LEAGUE_INTRO.sportsPrompt}</p>
+          <p className="mt-4 max-w-3xl text-cool-grey">{leagues.sportsPrompt}</p>
           <ul className="mt-4 flex flex-wrap gap-3">
-            {LEAGUE_SPORTS.map((sport) => (
-              <li key={sport} className="rounded-full border border-ice/30 px-4 py-1.5 text-sm text-white">
+            {leagues.sports.map((sport, i) => (
+              <li key={`${i}-${sport}`} className="rounded-full border border-ice/30 px-4 py-1.5 text-sm text-white">
                 {sport}
               </li>
             ))}
           </ul>
-          <p className="mt-6 max-w-3xl text-cool-grey">{LEAGUE_INTRO.formPrompt}</p>
+          <p className="mt-6 max-w-3xl text-cool-grey">{leagues.formPrompt}</p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <Button href="/league">{LEAGUE_INTRO.formTitle}</Button>
+            <Button href="/league">{leagues.formButtonLabel}</Button>
             <Button href="/partners" variant="outline">
-              Partner With Us
+              {leagues.partnerButtonLabel}
             </Button>
           </div>
         </ScrollReveal>
@@ -96,66 +82,62 @@ export function LeagueCTASection() {
 }
 
 export function OfferingsSection() {
+  const offerings = useContent("home.offerings");
   const blocks = [
-    OFFERINGS.athletic,
+    offerings.athletic,
     {
-      ...OFFERINGS.family,
-      extra: OFFERINGS.family.bullets,
-      closing: OFFERINGS.family.closing,
-      goal: OFFERINGS.family.goal,
-      playStructure: OFFERINGS.family.playStructure,
+      ...offerings.family,
+      extra: offerings.family.bullets,
     },
     {
-      ...OFFERINGS.camps,
-      extra: OFFERINGS.camps.bullets,
-      goal: OFFERINGS.camps.goal,
+      ...offerings.camps,
+      extra: offerings.camps.bullets,
     },
     {
-      ...OFFERINGS.more,
-      extra: OFFERINGS.more.bullets,
-      closing: OFFERINGS.more.closing,
+      ...offerings.more,
+      extra: offerings.more.bullets,
     },
   ];
 
   return (
-    <SectionBlock
-      id="offerings"
-      eyebrow="What We Offer"
-      title="What Is Little Mounties Community Sports Complex Offering?"
-    >
-      <p>{OFFERINGS.intro}</p>
+    <SectionBlock id="offerings" eyebrow={offerings.eyebrow} title={offerings.title}>
+      <p>{offerings.intro}</p>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {OFFERING_GALLERY.map((src) => (
-          <SiteGalleryImage
-            key={src}
-            src={src}
-            alt="Facility offerings preview"
-            className="aspect-[4/5] min-h-[280px] sm:min-h-[320px] lg:min-h-[360px]"
-          />
-        ))}
-      </div>
+      {offerings.gallery.length > 0 && (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {offerings.gallery.map((src, i) => (
+            <SiteGalleryImage
+              key={`${i}-${src}`}
+              src={src}
+              alt="Facility offerings preview"
+              className="aspect-[4/5] min-h-[280px] sm:min-h-[320px] lg:min-h-[360px]"
+            />
+          ))}
+        </div>
+      )}
 
       <div className="space-y-16">
         {blocks.map((block, i) => (
-          <ScrollReveal key={block.title} delay={i * 0.05}>
+          <ScrollReveal key={`${i}-${block.title}`} delay={i * 0.05}>
             <div className="min-w-0">
               <h3 className="break-words font-display text-[clamp(1.5rem,5vw,1.875rem)] text-white">
                 {block.title}
               </h3>
               <p className="mt-4 leading-relaxed">{block.body}</p>
               {"extra" in block && block.extra && (
-                <ul className="mt-4 space-y-2">
+                <>
                   {"playStructure" in block && block.playStructure && (
-                    <p className="mb-3 leading-relaxed">{block.playStructure}</p>
+                    <p className="mt-4 leading-relaxed">{block.playStructure}</p>
                   )}
-                  {block.extra.map((item) => (
-                    <li key={item} className="flex gap-2">
-                      <Check className="mt-1 h-4 w-4 shrink-0 text-ice" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                  <ul className="mt-4 space-y-2">
+                    {block.extra.map((item, j) => (
+                      <li key={`${j}-${item}`} className="flex gap-2">
+                        <Check className="mt-1 h-4 w-4 shrink-0 text-ice" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </>
               )}
               {"closing" in block && block.closing && <p className="mt-4">{block.closing}</p>}
               {"goal" in block && block.goal && (
@@ -170,7 +152,7 @@ export function OfferingsSection() {
         <SiteImage imageKey="products" alt="View products" className="aspect-[21/9] rounded-2xl" objectFit="contain" />
         <div className="mt-6">
           <Button href="/shop" variant="outline">
-            View Products
+            {offerings.productsButtonLabel}
           </Button>
         </div>
       </div>
@@ -179,53 +161,49 @@ export function OfferingsSection() {
 }
 
 export function MembershipSection() {
+  const memberships = useContent("home.memberships");
   return (
-    <SectionBlock id="memberships" title={MEMBERSHIPS.title}>
-      <p>{MEMBERSHIPS.body}</p>
-      <p className="font-display text-xl text-ice">{MEMBERSHIPS.note}</p>
-      <p className="text-cool-grey">{FOUNDING_MEMBERS_INTRO.early}</p>
-      <Button href="/founding-members">Founding Members Interest Form</Button>
+    <SectionBlock id="memberships" title={memberships.title}>
+      <p>{memberships.body}</p>
+      <p className="font-display text-xl text-ice">{memberships.note}</p>
+      <p className="text-cool-grey">{memberships.earlyText}</p>
+      <Button href="/founding-members">{memberships.buttonLabel}</Button>
     </SectionBlock>
   );
 }
 
 export function CampaignSection() {
+  const campaign = useContent("home.campaign");
   return (
     <section id="campaign" className="overflow-x-clip border-t border-border py-16 sm:py-20">
       <div className="mx-auto min-w-0 max-w-7xl px-4 sm:px-6">
         <p className="break-words text-xs font-semibold uppercase tracking-[0.2em] text-ice sm:tracking-[0.35em]">
-          Capital Campaign
+          {campaign.eyebrow}
         </p>
         <h2 className="mt-3 break-words font-display text-[clamp(1.75rem,7vw,3rem)] leading-tight text-white sm:text-5xl">
-          Capital Campaign Prospectus
+          {campaign.title}
         </h2>
         <p className="mt-4 max-w-3xl break-words font-display text-base uppercase leading-snug tracking-wide text-ice sm:text-lg">
-          {CAMPAIGN_HEADLINE}
+          {campaign.headline}
         </p>
         <ScrollReveal className="mt-8">
           <div className="glass-panel mx-auto flex min-w-0 max-w-3xl flex-col rounded-2xl p-6 sm:p-8">
-            <p className="text-sm uppercase tracking-[0.25em] text-ice">Campaign Draft Prospectus</p>
-            <h3 className="mt-3 font-display text-2xl text-white">Capital Campaign Prospectus</h3>
-            <p className="mt-4 text-cool-grey">
-              Review the full capital campaign prospectus with giving levels, recognition opportunities, and
-              community impact details.
-            </p>
+            <p className="text-sm uppercase tracking-[0.25em] text-ice">{campaign.cardLabel}</p>
+            <h3 className="mt-3 font-display text-2xl text-white">{campaign.cardTitle}</h3>
+            <p className="mt-4 text-cool-grey">{campaign.cardBody}</p>
             <div className="mt-6 flex flex-wrap gap-4">
-              <Button href="/images/campaign-prospectus.pdf" external>
-                View Prospectus PDF
+              <Button href={campaign.prospectusUrl} external>
+                {campaign.prospectusButtonLabel}
               </Button>
               <Button href="/pricing" variant="outline">
-                View Sponsorship Tiers
+                {campaign.tiersButtonLabel}
               </Button>
             </div>
           </div>
         </ScrollReveal>
         <div className="mx-auto mt-8 flex min-w-0 max-w-3xl flex-col items-center gap-6 text-center">
-          <p className="text-cool-grey">
-            From facility naming rights to community supporter tiers, every gift helps build Clearfield
-            County&apos;s next-generation sports destination.
-          </p>
-          <ZeffyPayButton href={ZEFFY_URL} label="Donate Any Amount" />
+          <p className="text-cool-grey">{campaign.closingText}</p>
+          <ZeffyPayButton href={ZEFFY_URL} label={campaign.donateButtonLabel} />
         </div>
       </div>
     </section>
@@ -233,11 +211,12 @@ export function CampaignSection() {
 }
 
 export function EconomicSection() {
+  const economic = useContent("home.economic");
   return (
-    <SectionBlock id="economic-impact" title="An Economic Driver for Clearfield County">
+    <SectionBlock id="economic-impact" title={economic.title}>
       <ul className="space-y-4">
-        {ECONOMIC_IMPACT.map((item) => (
-          <li key={item} className="flex gap-3">
+        {economic.items.map((item, i) => (
+          <li key={`${i}-${item}`} className="flex gap-3">
             <Check className="mt-1 h-5 w-5 shrink-0 text-ice" />
             <span className="text-base">{item}</span>
           </li>
@@ -248,16 +227,16 @@ export function EconomicSection() {
 }
 
 export function DonateSection() {
+  const donate = useContent("home.donate");
   return (
     <section id="donate" className="overflow-x-clip border-t border-border py-16 gradient-bg sm:py-20">
       <div className="mx-auto min-w-0 max-w-3xl px-4 text-center sm:px-6">
-        <h2 className="break-words font-display text-[clamp(1.75rem,7vw,3rem)] text-white sm:text-5xl">Donate</h2>
-        <p className="mt-4 text-lg text-cool-grey">
-          Help build a lasting legacy for our community. Please give any amount to this campaign to help build
-          our community&apos;s future.
-        </p>
+        <h2 className="break-words font-display text-[clamp(1.75rem,7vw,3rem)] text-white sm:text-5xl">
+          {donate.title}
+        </h2>
+        <p className="mt-4 text-lg text-cool-grey">{donate.body}</p>
         <div className="mt-8 flex justify-center">
-          <ZeffyPayButton href={ZEFFY_URL} label="Click Here For Payment" />
+          <ZeffyPayButton href={ZEFFY_URL} label={donate.buttonLabel} />
         </div>
       </div>
     </section>
@@ -265,10 +244,11 @@ export function DonateSection() {
 }
 
 export function RealEstateSection() {
+  const realEstate = useContent("home.realEstate");
   return (
-    <SectionBlock id="real-estate" title={REAL_ESTATE.title}>
-      {REAL_ESTATE.body.map((p) => (
-        <p key={p.slice(0, 40)} className="leading-relaxed">
+    <SectionBlock id="real-estate" title={realEstate.title}>
+      {realEstate.body.map((p, i) => (
+        <p key={`${i}-${p.slice(0, 40)}`} className="leading-relaxed">
           {p}
         </p>
       ))}
@@ -278,10 +258,11 @@ export function RealEstateSection() {
 }
 
 export function InvestmentSection() {
+  const investment = useContent("home.investment");
   return (
-    <SectionBlock id="investment" title={INVESTMENT.title}>
-      {INVESTMENT.body.map((p) => (
-        <p key={p.slice(0, 40)} className="leading-relaxed">
+    <SectionBlock id="investment" title={investment.title}>
+      {investment.body.map((p, i) => (
+        <p key={`${i}-${p.slice(0, 40)}`} className="leading-relaxed">
           {p}
         </p>
       ))}
@@ -291,25 +272,23 @@ export function InvestmentSection() {
 }
 
 export function StayConnectedSection() {
+  const stay = useContent("home.stayConnected");
   return (
     <section id="stay-connected" className="overflow-x-clip border-t border-border py-16 sm:py-20">
       <div className="mx-auto min-w-0 max-w-7xl px-4 sm:px-6">
         <h2 className="break-words font-display text-[clamp(1.75rem,7vw,3rem)] text-white sm:text-5xl">
-          Stay Connected
+          {stay.title}
         </h2>
-        <p className="mt-4 max-w-3xl text-cool-grey">
-          We&apos;re excited to continue sharing updates as Little Mounties Community Sports Complex develops.
-          Join our Facebook Page to stay informed about:
-        </p>
+        <p className="mt-4 max-w-3xl text-cool-grey">{stay.intro}</p>
         <ul className="mt-6 grid gap-2 sm:grid-cols-2">
-          {STAY_CONNECTED_BULLETS.map((item) => (
-            <li key={item} className="flex gap-2 text-cool-grey">
+          {stay.bullets.map((item, i) => (
+            <li key={`${i}-${item}`} className="flex gap-2 text-cool-grey">
               <Check className="mt-1 h-4 w-4 shrink-0 text-ice" />
               {item}
             </li>
           ))}
         </ul>
-        <p className="mt-6 max-w-3xl text-cool-grey">{STAY_CONNECTED_FOOTER}</p>
+        <p className="mt-6 max-w-3xl text-cool-grey">{stay.footer}</p>
         <Link
           href={FACEBOOK_URL}
           target="_blank"
@@ -317,7 +296,7 @@ export function StayConnectedSection() {
           className="mt-8 inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-xl bg-[#1877F2] px-5 py-3 text-center text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:px-6"
         >
           <ExternalLink className="h-5 w-5" />
-          Join Our Facebook Page
+          {stay.buttonLabel}
         </Link>
       </div>
     </section>
@@ -325,17 +304,18 @@ export function StayConnectedSection() {
 }
 
 export function PartnersCTASection() {
+  const partners = useContent("home.partnersCta");
   return (
     <section className="overflow-x-clip border-t border-border py-12 sm:py-16">
       <div className="mx-auto min-w-0 max-w-7xl px-4 text-center sm:px-6">
         <h2 className="break-words font-display text-[clamp(1.5rem,6vw,1.875rem)] text-white">
-          {PARTNER_CONTENT.headline}
+          {partners.headline}
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-cool-grey">{PARTNER_CONTENT.intro}</p>
-        <p className="mx-auto mt-3 max-w-2xl text-cool-grey">{PARTNER_CONTENT.destination}</p>
-        <p className="mx-auto mt-3 max-w-2xl text-cool-grey">{PARTNER_CONTENT.letsTalk}</p>
+        <p className="mx-auto mt-4 max-w-2xl text-cool-grey">{partners.intro}</p>
+        <p className="mx-auto mt-3 max-w-2xl text-cool-grey">{partners.destination}</p>
+        <p className="mx-auto mt-3 max-w-2xl text-cool-grey">{partners.letsTalk}</p>
         <Button href="/partners" className="mt-6">
-          Partner With Us
+          {partners.buttonLabel}
         </Button>
       </div>
     </section>

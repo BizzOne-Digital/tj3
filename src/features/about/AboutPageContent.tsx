@@ -5,49 +5,32 @@ import { SectionBlock, ZeffyPayButton } from "@/components/ui/ContentBlocks";
 import { Button } from "@/components/ui/Button";
 import { SiteImage } from "@/components/ui/SiteImage";
 import { BRAND } from "@/lib/constants";
-import {
-  ECONOMIC_IMPACT,
-  FACEBOOK_URL,
-  HOME_WELCOME,
-  ZEFFY_URL,
-} from "@/lib/home-content";
+import { useContent } from "@/components/providers/ContentProvider";
+import { FACEBOOK_URL, ZEFFY_URL } from "@/lib/home-content";
 import { cn } from "@/lib/utils";
 import { Check, ExternalLink, MapPin, Mail, Phone, Target, TrendingUp, Users } from "lucide-react";
 import Link from "next/link";
 
-const PILLARS = [
-  {
-    icon: Target,
-    title: "Our Mission",
-    body: HOME_WELCOME.mission,
-  },
-  {
-    icon: Users,
-    title: "For Every Family",
-    body: "From elite athlete development to birthday parties and family experiences, Little Mounties Community Sports Complex brings training, play, and community together under one roof.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Community Impact",
-    body: "We are building more than a gym — a hub of opportunity, wellness, and connection for Clearfield County and Central Pennsylvania.",
-  },
-];
+const PILLAR_ICONS = [Target, Users, TrendingUp];
 
 export function AboutPageContent({ extraHtml }: { extraHtml?: string }) {
+  const welcome = useContent("home.welcome");
+  const economic = useContent("home.economic");
+  const about = useContent("page.about");
   return (
     <>
       <SectionBlock
-        eyebrow={HOME_WELCOME.badge}
-        title="Who We Are"
+        eyebrow={welcome.badge}
+        title={about.whoWeAreTitle}
         className="border-t-0"
       >
         <div className="grid min-w-0 gap-10 lg:grid-cols-2 lg:items-start">
           <ScrollReveal className="min-w-0 space-y-5 text-base leading-relaxed">
-            <p className="text-lg text-ice">{HOME_WELCOME.subheadline}</p>
-            {HOME_WELCOME.paragraphs.map((p) => (
-              <p key={p.slice(0, 40)}>{p}</p>
+            <p className="text-lg text-ice">{welcome.subheadline}</p>
+            {welcome.paragraphs.map((p, i) => (
+              <p key={`${i}-${p.slice(0, 40)}`}>{p}</p>
             ))}
-            <p className="font-display text-xl text-white sm:text-2xl">{HOME_WELCOME.legacyLine}</p>
+            <p className="font-display text-xl text-white sm:text-2xl">{welcome.legacyLine}</p>
           </ScrollReveal>
           <ScrollReveal delay={0.08}>
             <SiteImage
@@ -63,26 +46,29 @@ export function AboutPageContent({ extraHtml }: { extraHtml?: string }) {
       <section className="overflow-x-clip border-t border-border py-16 sm:py-20">
         <div className="mx-auto min-w-0 max-w-7xl px-4 sm:px-6">
           <div className="grid min-w-0 gap-5 md:grid-cols-3">
-            {PILLARS.map((pillar, i) => (
-              <ScrollReveal key={pillar.title} delay={i * 0.06}>
+            {about.pillars.map((pillar, i) => {
+              const Icon = PILLAR_ICONS[i % PILLAR_ICONS.length];
+              return (
+              <ScrollReveal key={`${i}-${pillar.title}`} delay={i * 0.06}>
                 <article className="glass-panel h-full rounded-2xl p-6 sm:p-8">
                   <div className="mb-4 inline-flex rounded-xl bg-electric/15 p-3 text-ice">
-                    <pillar.icon className="h-6 w-6" />
+                    <Icon className="h-6 w-6" />
                   </div>
                   <h3 className="font-display text-xl text-white">{pillar.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-cool-grey sm:text-base">{pillar.body}</p>
                 </article>
               </ScrollReveal>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      <SectionBlock id="vision" eyebrow="The Plan" title={HOME_WELCOME.visionTitle}>
-        <p className="max-w-3xl">{HOME_WELCOME.visionIntro}</p>
+      <SectionBlock id="vision" eyebrow={about.planEyebrow} title={welcome.visionTitle}>
+        <p className="max-w-3xl">{welcome.visionIntro}</p>
         <div className="mt-8 grid min-w-0 gap-3 sm:grid-cols-2">
-          {HOME_WELCOME.visionItems.map((item, i) => (
-            <ScrollReveal key={item} delay={i * 0.03}>
+          {welcome.visionItems.map((item, i) => (
+            <ScrollReveal key={`${i}-${item}`} delay={i * 0.03}>
               <div className="glass-panel flex h-full gap-3 rounded-xl p-4">
                 <Check className="mt-0.5 h-5 w-5 shrink-0 text-ice" />
                 <span className="text-sm leading-relaxed text-cool-grey sm:text-base">{item}</span>
@@ -106,10 +92,10 @@ export function AboutPageContent({ extraHtml }: { extraHtml?: string }) {
         </div>
       </SectionBlock>
 
-      <SectionBlock id="impact" eyebrow="Clearfield County" title="An Economic Driver for Clearfield County">
+      <SectionBlock id="impact" eyebrow={economic.eyebrow} title={economic.title}>
         <div className="grid min-w-0 gap-4 lg:grid-cols-2">
-          {ECONOMIC_IMPACT.map((item, i) => (
-            <ScrollReveal key={item} delay={i * 0.04}>
+          {economic.items.map((item, i) => (
+            <ScrollReveal key={`${i}-${item}`} delay={i * 0.04}>
               <div className="flex h-full gap-3 rounded-xl border border-border bg-graphite/40 p-5">
                 <Check className="mt-1 h-5 w-5 shrink-0 text-ice" />
                 <span className="leading-relaxed">{item}</span>
@@ -124,7 +110,7 @@ export function AboutPageContent({ extraHtml }: { extraHtml?: string }) {
           <ScrollReveal>
             <div className="glass-panel rounded-2xl p-6 sm:p-10">
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-ice">Get In Touch</p>
-              <h2 className="mt-3 font-display text-2xl text-white sm:text-3xl">Project Contact</h2>
+              <h2 className="mt-3 font-display text-2xl text-white sm:text-3xl">{about.contactTitle}</h2>
               <div className="mt-8 grid min-w-0 gap-6 sm:grid-cols-3">
                 <div className="flex gap-3">
                   <MapPin className="h-5 w-5 shrink-0 text-ice" />
@@ -161,12 +147,9 @@ export function AboutPageContent({ extraHtml }: { extraHtml?: string }) {
         <div className="mx-auto min-w-0 max-w-7xl px-4 text-center sm:px-6">
           <ScrollReveal>
             <h2 className="font-display text-[clamp(1.75rem,5vw,2.5rem)] text-white">
-              Help Build the Future of Community Sports
+              {about.ctaTitle}
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-cool-grey">
-              Partner with us, support the capital campaign, or stay connected as Little Mounties Community Sports
-              Complex comes to Clearfield County.
-            </p>
+            <p className="mx-auto mt-4 max-w-2xl text-cool-grey">{about.ctaBody}</p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button href="/partners">Partner With Us</Button>
               <Button href="/league" variant="outline">

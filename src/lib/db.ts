@@ -1,6 +1,13 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/little-mounties";
+function getMongoUri(): string {
+  const uri = process.env.MONGODB_URI;
+  if (uri) return uri;
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("MONGODB_URI is not set. Add your MongoDB Atlas connection string to the environment.");
+  }
+  return "mongodb://127.0.0.1:27017/little-mounties";
+}
 
 interface MongooseCache {
   conn: typeof mongoose | null;
@@ -18,7 +25,11 @@ export async function connectDB(): Promise<typeof mongoose> {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI, { bufferCommands: false });
+    cached.promise = mongoose.connect(getMongoUri(), { bufferCommands: false }).catch((err) => {
+      // Do not cache a failed connection: the next request must be able to retry.
+      cached.promise = null;
+      throw err;
+    });
   }
 
   cached.conn = await cached.promise;

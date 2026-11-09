@@ -37,6 +37,14 @@ const sponsorshipTiers = STATIC_PRICING_TIERS.map((tier) => ({
 
 async function seed() {
   await connectDB();
+
+  const force = process.argv.includes("--force");
+  if (!force && (await User.countDocuments()) > 0) {
+    throw new Error(
+      "Database already has data. Seeding DELETES site settings, news, team, FAQ, pricing and pages. " +
+        "Run `npm run set-admin` to only change the admin login, or re-run with --force to wipe and reseed.",
+    );
+  }
   console.log("Seeding Little Mounties database...");
 
   await SiteSettings.deleteMany({});
@@ -69,9 +77,13 @@ async function seed() {
     },
   });
 
-  const adminPass = process.env.ADMIN_PASSWORD || "Admin@12345";
+  const adminEmail = (process.env.ADMIN_EMAIL || "").trim().toLowerCase();
+  const adminPass = process.env.ADMIN_PASSWORD || "";
+  if (!adminEmail || adminPass.length < 8) {
+    throw new Error("Set ADMIN_EMAIL and ADMIN_PASSWORD (8+ chars) in .env.local before seeding.");
+  }
   await User.create({
-    email: "admin@littlemounties.com",
+    email: adminEmail,
     passwordHash: await bcrypt.hash(adminPass, 12),
     name: "Tj Anderson",
     role: "super_admin",
@@ -157,7 +169,7 @@ async function seed() {
   ]);
 
   console.log("Seed complete.");
-  console.log("Admin login: admin@littlemounties.com /", adminPass);
+  console.log("Admin login:", adminEmail);
   process.exit(0);
 }
 

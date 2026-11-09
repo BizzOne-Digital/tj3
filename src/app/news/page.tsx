@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { NewsImage, isNewsFlyerImage } from "@/components/ui/NewsImage";
 import { api } from "@/lib/api";
 import { getStaticNewsArticles } from "@/lib/static-news";
+import { getContent } from "@/lib/site-content-server";
 import { buildMetadata } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
@@ -15,6 +16,7 @@ export const metadata = buildMetadata({
 });
 
 export default async function NewsPage() {
+  const heroes = await getContent("pageHeroes");
   let articles = getStaticNewsArticles();
   try {
     const res = await api.getNews();
@@ -26,7 +28,7 @@ export default async function NewsPage() {
 
   return (
     <>
-      <PageHero title="News" subtitle="Stay up to date with our community." />
+      <PageHero title={heroes.news.title} subtitle={heroes.news.subtitle} />
       <section className="py-24">
         <Container>
           <div className="grid min-w-0 gap-8 md:grid-cols-2 lg:grid-cols-3">

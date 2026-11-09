@@ -8,6 +8,7 @@ export default function AdminShopPage() {
     <GenericCrudPage<ShopProduct>
       resource="shop"
       title="Shop Products"
+      itemLabel="Product"
       defaultValues={{ published: true, inStock: true, comingSoon: false, price: 0, featured: false }}
       columns={[
         { key: "name", label: "Name" },

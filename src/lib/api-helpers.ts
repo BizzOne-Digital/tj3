@@ -17,13 +17,14 @@ export async function getPublishedList(resource: ResourceKey, query?: { limit?: 
   const filter: Record<string, unknown> = {};
   if ("published" in Model.schema.paths) filter.published = true;
   if (query?.q && "title" in Model.schema.paths) {
+    const escaped = query.q.slice(0, 100).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     filter.$or = [
-      { title: { $regex: query.q, $options: "i" } },
-      { name: { $regex: query.q, $options: "i" } },
+      { title: { $regex: escaped, $options: "i" } },
+      { name: { $regex: escaped, $options: "i" } },
     ];
   }
-  const limit = query?.limit ?? 100;
-  const page = query?.page ?? 1;
+  const limit = Math.min(Math.max(query?.limit ?? 100, 1), 200);
+  const page = Math.max(query?.page ?? 1, 1);
   const skip = (page - 1) * limit;
   const [items, total] = await Promise.all([
     Model.find(filter).sort({ order: 1, createdAt: -1 }).skip(skip).limit(limit).lean(),

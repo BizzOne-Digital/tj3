@@ -5,6 +5,7 @@ import { CmsImage } from "@/components/ui/CmsImage";
 import { api } from "@/lib/api";
 import { BRAND } from "@/lib/constants";
 import { STATIC_TEAM } from "@/lib/home-content";
+import { getContent } from "@/lib/site-content-server";
 import { buildMetadata } from "@/lib/seo";
 import { Mail, Phone } from "lucide-react";
 
@@ -15,6 +16,7 @@ export const metadata = buildMetadata({
 });
 
 export default async function TeamPage() {
+  const heroes = await getContent("pageHeroes");
   let members: Awaited<ReturnType<typeof api.getTeam>>["data"] = [];
   try {
     const res = await api.getTeam();
@@ -39,7 +41,7 @@ export default async function TeamPage() {
 
   return (
     <>
-      <PageHero title="Our Team" subtitle="The people building Clearfield County's next sports destination." />
+      <PageHero title={heroes.team.title} subtitle={heroes.team.subtitle} />
       <section className="py-24">
         <Container>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">

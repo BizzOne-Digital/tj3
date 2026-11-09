@@ -1,24 +1,26 @@
 import { NextRequest } from "next/server";
 import { requireAuth } from "@/lib/auth-server";
 import { connectDB } from "@/lib/db";
-import { RESOURCE_MAP, ResourceKey, SiteSettings } from "@/lib/models";
-import { getSettingsDoc, jsonError, jsonOk, parseQuery } from "@/lib/api-helpers";
+import { RESOURCE_MAP, SiteSettings } from "@/lib/models";
+import { getSettingsDoc, jsonError, jsonOk } from "@/lib/api-helpers";
+import {
+  adminFailure,
+  isAdminResource,
+  revalidatePublicSite,
+  sanitizeBody,
+  withSlug,
+} from "@/lib/admin-api";
+import { deleteReplacedUploads } from "@/lib/upload-server";
 
-const ADMIN_RESOURCES: ResourceKey[] = [
-  "stats",
-  "facilities",
-  "services",
-  "pricing",
-  "team",
-  "faq",
-  "news",
-  "shop",
-  "sponsors",
-  "pages",
-  "bookings",
-  "contacts",
-  "inquiries",
-];
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+function adminListQuery(req: NextRequest) {
+  const sp = req.nextUrl.searchParams;
+  const limit = Math.min(Math.max(Number(sp.get("limit")) || 500, 1), 1000);
+  const page = Math.max(Number(sp.get("page")) || 1, 1);
+  return { limit, skip: (page - 1) * limit };
+}
 
 export async function GET(
   req: NextRequest,
@@ -28,18 +30,13 @@ export async function GET(
     await requireAuth(req);
     const { resource } = await params;
     if (resource === "settings") {
-      const settings = await getSettingsDoc();
-      return jsonOk(settings);
+      return jsonOk(await getSettingsDoc());
     }
-    if (!ADMIN_RESOURCES.includes(resource as ResourceKey)) {
-      return jsonError("Not found", 404);
-    }
+    if (!isAdminResource(resource)) return jsonError("Not found", 404);
+
     await connectDB();
-    const Model = RESOURCE_MAP[resource as ResourceKey];
-    const query = parseQuery(req);
-    const limit = query.limit ?? 50;
-    const page = query.page ?? 1;
-    const skip = (page - 1) * limit;
+    const Model = RESOURCE_MAP[resource];
+    const { limit, skip } = adminListQuery(req);
     const [items, total] = await Promise.all([
       Model.find({}).sort({ order: 1, createdAt: -1 }).skip(skip).limit(limit).lean(),
       Model.countDocuments({}),
@@ -48,9 +45,21 @@ export async function GET(
       items.map((item) => ({ ...item, _id: item._id.toString() })),
       { total },
     );
-  } catch {
-    return jsonError("Unauthorized", 401);
+  } catch (e) {
+    return adminFailure(e, "Failed to load");
   }
+}
+
+async function saveSettings(body: unknown) {
+  await connectDB();
+  const data = sanitizeBody(body);
+  const existing = await SiteSettings.findOne().lean();
+  const updated = existing
+    ? await SiteSettings.findByIdAndUpdate(existing._id, { $set: data }, { new: true, runValidators: true }).lean()
+    : await SiteSettings.create(data).then((d) => d.toObject());
+  if (existing) await deleteReplacedUploads(existing, updated);
+  revalidatePublicSite();
+  return updated;
 }
 
 export async function POST(
@@ -62,25 +71,16 @@ export async function POST(
     const { resource } = await params;
     const body = await req.json();
 
-    if (resource === "settings") {
-      await connectDB();
-      const existing = await SiteSettings.findOne();
-      const updated = existing
-        ? await SiteSettings.findByIdAndUpdate(existing._id, body, { new: true }).lean()
-        : await SiteSettings.create(body).then((d) => d.toObject());
-      return jsonOk(updated);
-    }
-
-    if (!ADMIN_RESOURCES.includes(resource as ResourceKey)) {
-      return jsonError("Not found", 404);
-    }
+    if (resource === "settings") return jsonOk(await saveSettings(body));
+    if (!isAdminResource(resource)) return jsonError("Not found", 404);
 
     await connectDB();
-    const Model = RESOURCE_MAP[resource as ResourceKey];
-    const doc = await Model.create(body);
+    const Model = RESOURCE_MAP[resource];
+    const doc = await Model.create(withSlug(resource, sanitizeBody(body)));
+    revalidatePublicSite();
     return jsonOk({ ...doc.toObject(), _id: doc._id.toString() });
   } catch (e) {
-    return jsonError(e instanceof Error ? e.message : "Failed to create", 400);
+    return adminFailure(e, "Failed to create");
   }
 }
 
@@ -91,19 +91,9 @@ export async function PUT(
   try {
     await requireAuth(req);
     const { resource } = await params;
-    const body = await req.json();
-
-    if (resource === "settings") {
-      await connectDB();
-      const existing = await SiteSettings.findOne();
-      const updated = existing
-        ? await SiteSettings.findByIdAndUpdate(existing._id, body, { new: true }).lean()
-        : await SiteSettings.create(body).then((d) => d.toObject());
-      return jsonOk(updated);
-    }
-
-    return jsonError("Use item route for updates", 400);
-  } catch {
-    return jsonError("Unauthorized", 401);
+    if (resource !== "settings") return jsonError("Use item route for updates", 400);
+    return jsonOk(await saveSettings(await req.json()));
+  } catch (e) {
+    return adminFailure(e, "Failed to save");
   }
 }

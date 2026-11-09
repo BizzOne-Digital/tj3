@@ -8,6 +8,7 @@ export default function AdminFaqPage() {
     <GenericCrudPage<FaqItem>
       resource="faq"
       title="FAQ Items"
+      itemLabel="FAQ"
       defaultValues={{ published: true, order: 0 }}
       columns={[
         { key: "question", label: "Question" },

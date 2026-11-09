@@ -5,7 +5,7 @@ import { CmsImage } from "@/components/ui/CmsImage";
 import { SiteImage } from "@/components/ui/SiteImage";
 import { Button } from "@/components/ui/Button";
 import { api } from "@/lib/api";
-import { SHOP_CONTENT } from "@/lib/home-content";
+import { getContent } from "@/lib/site-content-server";
 import { buildMetadata } from "@/lib/seo";
 import { formatPrice } from "@/lib/utils";
 import Link from "next/link";
@@ -17,6 +17,7 @@ export const metadata = buildMetadata({
 });
 
 export default async function ShopPage() {
+  const SHOP_CONTENT = await getContent("page.shop");
   let products: Awaited<ReturnType<typeof api.getShop>>["data"] = [];
   try {
     const res = await api.getShop();

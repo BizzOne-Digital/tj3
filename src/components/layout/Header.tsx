@@ -49,7 +49,7 @@ function MobileNav({
   if (!open || typeof document === "undefined") return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-[9999] lg:hidden">
+    <div className="fixed inset-0 z-[9999] xl:hidden">
       <button
         type="button"
         aria-label="Close menu"
@@ -152,7 +152,7 @@ export function Header({
             <Logo src={logoUrl} size={isHero ? "lg" : "md"} priority />
           </Link>
 
-          <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">
+          <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 xl:flex">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
@@ -164,7 +164,7 @@ export function Header({
             ))}
           </nav>
 
-          <div className="relative z-10 hidden lg:block">
+          <div className="relative z-10 hidden xl:block">
             <SupportButton
               href={supportUrl}
               onClick={() => trackSupportClick("nav")}
@@ -173,7 +173,7 @@ export function Header({
 
           <button
             type="button"
-            className="relative z-10 rounded-lg p-2 text-white lg:hidden"
+            className="relative z-10 rounded-lg p-2 text-white xl:hidden"
             onClick={() => setOpen((prev) => !prev)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}

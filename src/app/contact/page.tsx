@@ -3,6 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { ContactForm } from "@/features/contact/ContactForm";
 import { api } from "@/lib/api";
 import { BRAND } from "@/lib/constants";
+import { getContent } from "@/lib/site-content-server";
 import { buildMetadata } from "@/lib/seo";
 import { Mail, MapPin, Phone } from "lucide-react";
 
@@ -13,6 +14,7 @@ export const metadata = buildMetadata({
 });
 
 export default async function ContactPage() {
+  const heroes = await getContent("pageHeroes");
   let settings = null;
   try {
     const res = await api.getSettings();
@@ -28,10 +30,7 @@ export default async function ContactPage() {
 
   return (
     <>
-      <PageHero
-        title="Contact Us"
-        subtitle={`Reach ${BRAND.contactPerson} — we'd love to hear from you.`}
-      />
+      <PageHero title={heroes.contact.title} subtitle={heroes.contact.subtitle} />
       <section className="py-24">
         <Container>
           <div className="grid gap-12 lg:grid-cols-5">

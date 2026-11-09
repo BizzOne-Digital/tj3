@@ -3,6 +3,7 @@
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
 import { api } from "@/lib/api";
+import { useContent } from "@/components/providers/ContentProvider";
 import { STATIC_FAQ } from "@/lib/home-content";
 import { faqJsonLd } from "@/lib/seo";
 import { useQuery } from "@tanstack/react-query";
@@ -41,6 +42,7 @@ function FaqAccordion({
 }
 
 export default function FaqPage() {
+  const heroes = useContent("pageHeroes");
   const { data, isLoading } = useQuery({
     queryKey: ["faq"],
     queryFn: () => api.getFaq(),
@@ -62,7 +64,7 @@ export default function FaqPage() {
           }}
         />
       )}
-      <PageHero title="FAQ" subtitle="Answers to common questions about Little Mounties Community Sports Complex." />
+      <PageHero title={heroes.faq.title} subtitle={heroes.faq.subtitle} />
       <section className="py-24">
         <Container className="max-w-3xl">
           {isLoading ? (

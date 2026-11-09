@@ -2,12 +2,15 @@ import type {
   ApiResponse,
   BookingSubmission,
   ContactSubmission,
+  Coach,
   CrudResource,
   Facility,
   FaqItem,
+  GalleryImage,
   NewsArticle,
   PageContent,
   PricingTier,
+  ScheduleItem,
   Service,
   ShopProduct,
   SiteSettings,
@@ -68,6 +71,9 @@ export const api = {
   getShop: () => fetchApi<ApiResponse<ShopProduct[]>>("/shop"),
   getProductBySlug: (slug: string) =>
     fetchApi<ApiResponse<ShopProduct>>(`/shop/${slug}`),
+  getSchedule: () => fetchApi<ApiResponse<ScheduleItem[]>>("/schedule"),
+  getCoaches: () => fetchApi<ApiResponse<Coach[]>>("/coaches"),
+  getGallery: () => fetchApi<ApiResponse<GalleryImage[]>>("/gallery"),
   getSponsors: () => fetchApi<ApiResponse<Sponsor[]>>("/sponsors"),
   getPage: (slug: string) => fetchApi<ApiResponse<PageContent>>(`/pages/${slug}`),
   submitContact: (data: {
@@ -136,6 +142,33 @@ export const adminApi = {
       method: "PUT",
       body: JSON.stringify(payload),
     }),
+};
+
+export type ContentPayload = {
+  defaults: Record<string, unknown>;
+  overrides: Record<string, unknown>;
+};
+
+export const contentApi = {
+  get: () => fetchApi<ApiResponse<ContentPayload>>("/admin/content"),
+  save: (key: string, value: unknown) =>
+    fetchApi<ApiResponse<{ key: string; value: unknown }>>("/admin/content", {
+      method: "PUT",
+      body: JSON.stringify({ key, value }),
+    }),
+  reset: (key: string) =>
+    fetchApi<ApiResponse<{ key: string; reset: boolean }>>(
+      `/admin/content?key=${encodeURIComponent(key)}`,
+      { method: "DELETE" },
+    ),
+};
+
+export const maintenanceApi = {
+  cleanupUploads: () =>
+    fetchApi<ApiResponse<{ scanned: number; deleted: number; keptRecent: number; referenced: number }>>(
+      "/admin/uploads/cleanup",
+      { method: "POST" },
+    ),
 };
 
 export const authApi = {

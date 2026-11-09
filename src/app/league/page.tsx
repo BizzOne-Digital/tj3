@@ -1,7 +1,7 @@
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
 import { LeagueForm } from "@/features/forms/LeagueForm";
-import { LEAGUE_INTRO, LEAGUE_SPORTS } from "@/lib/home-content";
+import { getContent } from "@/lib/site-content-server";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -10,7 +10,9 @@ export const metadata = buildMetadata({
   path: "/league",
 });
 
-export default function LeaguePage() {
+export default async function LeaguePage() {
+  const LEAGUE_INTRO = await getContent("home.leagues");
+  const LEAGUE_SPORTS = LEAGUE_INTRO.sports;
   return (
     <>
       <PageHero title={LEAGUE_INTRO.headline} subtitle={LEAGUE_INTRO.question} />
@@ -25,7 +27,7 @@ export default function LeaguePage() {
             ))}
           </ul>
           <p className="mb-8 text-cool-grey">{LEAGUE_INTRO.formPrompt}</p>
-          <h2 className="mb-6 font-display text-2xl text-white">{LEAGUE_INTRO.formTitle}</h2>
+          <h2 className="mb-6 font-display text-2xl text-white">{LEAGUE_INTRO.formButtonLabel}</h2>
           <LeagueForm />
         </Container>
       </section>
